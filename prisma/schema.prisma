@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(cuid())
+  id        String  @id @default(uuid())
   firstName String  @db.VarChar(255)
   lastName  String  @db.VarChar(255)
   photo     String?
@@ -27,7 +27,7 @@ model User {
 }
 
 model Office {
-  id         String  @id @default(cuid())
+  id         String  @id @default(uuid())
   name       String  @db.VarChar(255)
   address    String  @db.VarChar(255)
   city       String  @db.VarChar(255)
@@ -41,11 +41,12 @@ model Office {
   updatedAt  DateTime     @updatedAt
   jobOpening JobOpening[]
 
+  @@unique([name, city])
   @@index([id, name, city])
 }
 
 model JobOpening {
-  id          String  @id @default(cuid())
+  id          String  @id @default(uuid())
   title       String  @db.VarChar(255)
   description String  @db.Text
   locationId  String
@@ -64,7 +65,7 @@ model JobOpening {
 }
 
 model Application {
-  id String @id @default(cuid())
+  id String @id @default(uuid())
 
   jobOpeningId String
   jobOpening   JobOpening? @relation(fields: [jobOpeningId], references: [id])
@@ -91,7 +92,7 @@ model Application {
 }
 
 model Category {
-  id   String @id @default(cuid())
+  id   String @id @default(uuid())
   slug String @unique
   name String @db.VarChar(255)
 

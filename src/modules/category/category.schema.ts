@@ -5,9 +5,6 @@ export const createCategorySchema = object({
     name: string({ required_error: 'Name is required.' })
       .min(3, { message: 'Name is too short.' })
       .max(30, { message: 'Name is too long.' })
-      .regex(/^[a-zA-Z ]+$/, {
-        message: 'Name can only contain letters, numbers, and spaces.',
-      })
       .trim()
       .toLowerCase(),
   }),
@@ -21,14 +18,9 @@ export const updateCategorySchema = object({
     name: string({ required_error: 'Name is required.' })
       .min(3, { message: 'Name is too short.' })
       .max(30, { message: 'Name is too long.' })
-      .regex(/^[a-zA-Z ]+$/, {
-        message: 'Name can only contain letters, numbers, and spaces.',
-      })
       .trim()
       .toLowerCase(),
-    isPublished: boolean({
-      required_error: 'isPublished is required.',
-    }).optional(),
+    isPublished: boolean(),
   }).partial(),
 });
 
@@ -46,8 +38,11 @@ export const getCategoryByIdSchema = object({
 
 export const getCategorySchema = object({
   query: object({
-    divisionId: string(),
-  }).partial(),
+    search: string(),
+    page: string(),
+    limit: string(),
+    is_deleted: string(),
+  }),
 });
 
 export type createCategoryInput = TypeOf<typeof createCategorySchema>['body'];

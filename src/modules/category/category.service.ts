@@ -41,13 +41,42 @@ export const getUniqueCategory = async (
 };
 
 export const getAllCategory = async (
+  search?: string,
+  page: number = 1,
+  pageSize: number = 10,
   where?: Prisma.CategoryWhereInput,
   select?: Prisma.CategorySelect,
 ) => {
-  return prisma.category.findMany({
-    where: {
-      ...where,
-    },
-    select,
-  });
+  const skip = (page - 1) * pageSize;
+
+  const [data, total] = await Promise.all([
+    prisma.category.findMany({
+      where: {
+        ...where,
+        name: {
+          contains: search,
+          mode: 'insensitive', // Optional: case-insensitive search
+        },
+      },
+      skip,
+      take: pageSize,
+      select,
+    }),
+    prisma.category.count({
+      where: {
+        ...where,
+        name: {
+          contains: search,
+          mode: 'insensitive', // Ensure the count query matches the findMany query
+        },
+      },
+    }),
+  ]);
+
+  return {
+    data,
+    total,
+    page,
+    totalPages: Math.ceil(total / pageSize),
+  };
 };
