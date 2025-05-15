@@ -31,7 +31,7 @@ async function main() {
       city: 'Mohali',
       state: 'Punjab',
       country: 'India',
-      postalCode: '160055',
+       postalCode: '160055',
     },
     update: {
       id: '8db7612e-3d7f-482d-b094-7c2568628b24',
