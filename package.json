@@ -12,6 +12,7 @@
     "lint": "eslint",
     "format": "eslint --fix",
     "test": "yarn lint",
+    "prepare": "husky",
     "seed": "ts-node prisma/seed.ts"
   },
   "devDependencies": {
