@@ -25,6 +25,7 @@ async function main() {
   });
   await prisma.office.upsert({
     create: {
+      id: '8db7612e-3d7f-482d-b094-7c2568628b24',
       name: 'Head Office',
       address: 'E-314, 4th floor, Sector-75',
       city: 'Mohali',
@@ -33,6 +34,7 @@ async function main() {
       postalCode: '160055',
     },
     update: {
+      id: '8db7612e-3d7f-482d-b094-7c2568628b24',
       name: 'Head Office',
       address: 'E-314, 4th floor, Sector-75',
       city: 'Mohali',
@@ -41,10 +43,7 @@ async function main() {
       postalCode: '160055',
     },
     where: {
-      name_city: {
-        name: 'Head Office',
-        city: 'Mohali',
-      },
+      id: '8db7612e-3d7f-482d-b094-7c2568628b24',
     },
   });
 }
