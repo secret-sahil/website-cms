@@ -34,7 +34,8 @@ export const registerUserHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const { firstName, lastName, password, username } = req.body;
+    const user = req.user?.username;
+    const { firstName, lastName, password, username, role } = req.body;
 
     const encryptedPasswrd = await bcrypt.hash(password, 12);
 
@@ -42,7 +43,9 @@ export const registerUserHandler = async (
       username,
       firstName,
       lastName,
+      role,
       password: encryptedPasswrd,
+      createdBy: user,
     });
 
     res.status(200).json(response.successResponse('SUCCESS', 'User Registred Successfully'));

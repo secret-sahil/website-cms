@@ -1,4 +1,5 @@
-import { object, string, TypeOf, z } from 'zod';
+import { RoleEnumType } from '@prisma/client';
+import { nativeEnum, object, string, TypeOf, z } from 'zod';
 
 export const registerUserSchema = object({
   body: object({
@@ -13,6 +14,9 @@ export const registerUserSchema = object({
       }),
     email: string({ required_error: 'email number is required.' }).optional(),
     password: string({ required_error: 'Password is required.' }),
+    role: nativeEnum(RoleEnumType, {
+      required_error: 'Role is required.',
+    }),
   }),
 });
 

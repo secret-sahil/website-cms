@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from 'express';
 import AppError from '../utils/appError';
 import redisClient from '../utils/connectRedis';
 import { verifyJwt } from '../utils/jwt';
-// import { User } from '@prisma/client';
+import { User } from '@prisma/client';
 
 export const deserializeUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -97,21 +97,21 @@ export const deserializeUserIfAvaliable = async (
   }
 };
 
-// export const requireUser =
-//   (roles: Array<User['role']>) => (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       const user = req.user;
+export const requireUser =
+  (roles: Array<User['role']>) => (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = req.user;
 
-//       if (!user) {
-//         return next(new AppError(400, `Session has expired or user doesn't exist`));
-//       }
+      if (!user) {
+        return next(new AppError(400, `Session has expired or user doesn't exist`));
+      }
 
-//       if (roles.includes(user.role)) {
-//         return next();
-//       } else {
-//         return next(new AppError(401, `Unauthorized Access`));
-//       }
-//     } catch (err: any) {
-//       next(err);
-//     }
-//   };
+      if (roles.includes(user.role)) {
+        return next();
+      } else {
+        return next(new AppError(401, `Unauthorized Access`));
+      }
+    } catch (err: any) {
+      next(err);
+    }
+  };

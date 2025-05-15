@@ -6,17 +6,12 @@ import { imageUpload } from '../modules/upload/fileUpload.middleware';
 
 const router = express.Router();
 
-router.get(
-  '/me',
-  auth.deserializeUser,
-  // auth.requireUser(['user', 'admin', 'company']),
-  userController.getMeHandler,
-);
+router.get('/me', auth.deserializeUser, userController.getMeHandler);
 
 router.patch(
   '/update-user',
   auth.deserializeUser,
-  // auth.requireUser(['user', 'admin', 'company']),
+  auth.requireUser(['admin']),
   imageUpload.single('photo'),
   validate(userSchema.updateUserSchema),
   userController.updateUser,
@@ -26,7 +21,7 @@ router.patch(
 router.get(
   '/',
   auth.deserializeUser,
-  // auth.requireUser(['admin']),
+  auth.requireUser(['admin']),
   userController.getAllUsersAdminHandler,
 );
 

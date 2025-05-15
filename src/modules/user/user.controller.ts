@@ -27,10 +27,14 @@ export const updateUser = async (
       console.log(image);
     }
 
-    const { firstName, lastName } = req.body;
+    const { firstName, lastName, role, username, email, password } = req.body;
     const updatedUserData = {
       firstName: firstName || user?.firstName,
       lastName: lastName || user?.lastName,
+      role,
+      username,
+      email,
+      password,
       photo: image ? image[0] : user?.photo,
     };
 
