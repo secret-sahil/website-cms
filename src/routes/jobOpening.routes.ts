@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.get(
   '/',
-  auth.deserializeUser,
   validate(jobOpeningSchema.getJobOpeningSchema),
   jobOpeningController.getJobOpeningHandler,
 );
@@ -22,6 +21,7 @@ router.get(
 router.post(
   '/create',
   auth.deserializeUser,
+  auth.requireUser(['admin', 'hr']),
   validate(jobOpeningSchema.createJobOpeningSchema),
   jobOpeningController.createJobOpeningHandler,
 );
@@ -29,6 +29,7 @@ router.post(
 router.delete(
   '/delete/:id',
   auth.deserializeUser,
+  auth.requireUser(['admin', 'hr']),
   validate(jobOpeningSchema.deleteJobOpeningSchema),
   jobOpeningController.deleteJobOpeningHandler,
 );
@@ -36,6 +37,7 @@ router.delete(
 router.patch(
   '/update/:id',
   auth.deserializeUser,
+  auth.requireUser(['admin', 'hr']),
   validate(jobOpeningSchema.updateJobOpeningSchema),
   jobOpeningController.updateJobOpeningHandler,
 );

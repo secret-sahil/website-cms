@@ -3,10 +3,10 @@ import { AnyZodObject, ZodError } from 'zod';
 import AppError from '../utils/appError';
 import { response } from '../utils';
 import { User } from '@prisma/client';
-
+import config from 'config';
 export const validate =
   (schema: AnyZodObject) => (req: Request, res: Response, next: NextFunction) => {
-    if (process.env.APP_NODE_ENV === 'development') {
+    if (config.get<string>('env') === 'development') {
       console.log(req.body);
     }
     try {

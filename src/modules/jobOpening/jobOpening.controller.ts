@@ -93,8 +93,8 @@ export const getJobOpeningHandler = async (
 
     const jobOpening = await jobOpeningServices.getAllJobOpening(
       search,
-      Number(page),
-      Number(limit),
+      page ? Number(page) : undefined,
+      limit ? Number(limit) : undefined,
       {
         isPublished: true,
       },
