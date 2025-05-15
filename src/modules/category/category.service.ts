@@ -1,0 +1,53 @@
+import { PrismaClient, Prisma, Category } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+export const createCategory = async (
+  input: Prisma.CategoryUncheckedCreateInput,
+  select?: Prisma.CategorySelect,
+) => {
+  return (await prisma.category.create({
+    data: input,
+    select,
+  })) as Category;
+};
+
+export const deleteCategory = async (where: Prisma.CategoryWhereUniqueInput) => {
+  return (await prisma.category.delete({
+    where,
+  })) as Category;
+};
+
+export const updateCategory = async (
+  where: Prisma.CategoryWhereUniqueInput,
+  data: Prisma.CategoryUncheckedUpdateInput,
+  select?: Prisma.CategorySelect,
+) => {
+  return (await prisma.category.update({
+    data,
+    where,
+    select,
+  })) as Category;
+};
+
+export const getUniqueCategory = async (
+  where: Prisma.CategoryWhereUniqueInput,
+  select?: Prisma.CategorySelect,
+) => {
+  return (await prisma.category.findUnique({
+    where,
+    select,
+  })) as Category;
+};
+
+export const getAllCategory = async (
+  where?: Prisma.CategoryWhereInput,
+  select?: Prisma.CategorySelect,
+) => {
+  return prisma.category.findMany({
+    where: {
+      ...where,
+    },
+    select,
+  });
+};

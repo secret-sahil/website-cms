@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(cuid())
+  firstName String  @db.VarChar(255)
+  lastName  String  @db.VarChar(255)
+  photo     String?
+
+  username  String       @unique
+  password  String
+  role      RoleEnumType
+  isBlocked Boolean      @default(false)
+
+  createdBy String   @default("system")
+  updatedBy String   @default("system")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([id, firstName, lastName, username])
+}
+
+model Office {
+  id         String  @id @default(cuid())
+  name       String  @db.VarChar(255)
+  address    String  @db.VarChar(255)
+  city       String  @db.VarChar(255)
+  state      String  @db.VarChar(255)
+  country    String  @db.VarChar(255)
+  postalCode String? @db.VarChar(20)
+
+  createdBy  String       @default("system")
+  updatedBy  String       @default("system")
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  jobOpening JobOpening[]
+
+  @@index([id, name, city])
+}
+
+model JobOpening {
+  id          String  @id @default(cuid())
+  title       String  @db.VarChar(255)
+  description String  @db.Text
+  locationId  String
+  location    Office? @relation(fields: [locationId], references: [id])
+  experience  String? @db.VarChar(255)
+
+  isPublished Boolean @default(false)
+
+  createdBy   String        @default("system")
+  updatedBy   String        @default("system")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  application Application[]
+
+  @@index([id, title])
+}
+
+model Application {
+  id String @id @default(cuid())
+
+  jobOpeningId String
+  jobOpening   JobOpening? @relation(fields: [jobOpeningId], references: [id])
+
+  status ApplicationStatus @default(applied)
+
+  fullName String @db.VarChar(255)
+  email    String @db.VarChar(255)
+  phone    String @db.VarChar(20)
+
+  resume      String  @db.VarChar(255)
+  coverLetter String? @db.Text
+  linkedIn    String? @db.VarChar(255)
+
+  wheredidyouhear           String? @db.VarChar(255)
+  hasSubscribedToNewsletter Boolean @default(false)
+
+  createdBy String   @default("system")
+  updatedBy String   @default("system")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([id, jobOpeningId])
+}
+
+model Category {
+  id   String @id @default(cuid())
+  slug String @unique
+  name String @db.VarChar(255)
+
+  isPublished Boolean @default(false)
+
+  createdBy String   @default("system")
+  updatedBy String   @default("system")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([id, name])
+}
+
+enum ApplicationStatus {
+  applied
+  in_review
+  hired
+  rejected
+}
+
+enum RoleEnumType {
+  sales
+  content
+  hr
+  admin
+}
