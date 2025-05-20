@@ -10,7 +10,6 @@ import authRouter from './routes/auth.routes';
 import userRouter from './routes/user.routes';
 import categoriesRouter from './routes/category.routes';
 import jobOpeningRouter from './routes/jobOpening.routes';
-import uploadRouter from './routes/upload.route';
 import { errorHandler, notFoundRoute } from './modules/utils/appError';
 import { defaultController } from './modules/default';
 
@@ -46,8 +45,6 @@ async function bootstrap() {
     }),
   );
 
-  app.use('/media', express.static('public'));
-
   // 3. Logger
   if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
@@ -55,7 +52,6 @@ async function bootstrap() {
   app.use('/api/v1/auth', authRouter);
   app.use('/api/v1/users', userRouter);
   app.use('/api/v1/categories', categoriesRouter);
-  app.use('/api/v1/upload', uploadRouter);
   app.use('/api/v1/careers', jobOpeningRouter);
 
   // Testing
