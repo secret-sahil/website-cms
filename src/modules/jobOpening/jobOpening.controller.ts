@@ -49,7 +49,7 @@ export const applyJobOpeningHandler = async (
     if (!req.file) {
       return next(new AppError(400, 'Resume is required.'));
     }
-    req.file.originalname = `${req.file.originalname}${resumeUUID}.pdf`;
+    req.file.originalname = `${resumeUUID}.pdf`;
     const image = await awsS3services.uploadToS3(req.file!, 'resume-infutrix/');
 
     await jobOpeningServices.createJobApplication({
