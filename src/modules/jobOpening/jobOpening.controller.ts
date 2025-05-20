@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { response } from '../utils';
 import { jobOpeningSchema, jobOpeningServices } from '.';
 import AppError from '../utils/appError';
+import { awsS3services } from '../upload';
 
 export const createJobOpeningHandler = async (
   req: Request<{}, {}, jobOpeningSchema.createJobOpeningInput>,
@@ -16,6 +17,51 @@ export const createJobOpeningHandler = async (
       description,
       locationId,
       experience,
+      createdBy: req.user!.username,
+    });
+
+    res.status(200).json(response.successResponse('SUCCESS', 'Created Successfully'));
+  } catch (err: any) {
+    if (err.code === 'P2002') {
+      return next(new AppError(400, 'Dublicate entries are not allowed.'));
+    }
+    next(err);
+  }
+};
+
+export const applyJobOpeningHandler = async (
+  req: Request<{}, {}, jobOpeningSchema.applyJobOpeningInput>,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const {
+      fullName,
+      jobOpeningId,
+      email,
+      phone,
+      coverLetter,
+      linkedIn,
+      wheredidyouhear,
+      hasSubscribedToNewsletter,
+    } = req.body;
+
+    if (!req.file) {
+      return next(new AppError(400, 'Resume is required.'));
+    }
+    req.file.originalname = `${req.file.originalname}${crypto.randomUUID()}.pdf`;
+    const image = await awsS3services.uploadToS3(req.file!, 'resume/');
+
+    await jobOpeningServices.createJobApplication({
+      fullName,
+      jobOpeningId,
+      email,
+      phone,
+      coverLetter,
+      linkedIn,
+      resume: image[0],
+      wheredidyouhear,
+      hasSubscribedToNewsletter: hasSubscribedToNewsletter === 'yes',
       createdBy: req.user!.username,
     });
 
@@ -97,6 +143,14 @@ export const getJobOpeningHandler = async (
       limit ? Number(limit) : undefined,
       {
         isPublished: true,
+      },
+      {
+        location: {
+          select: {
+            id: true,
+            city: true,
+          },
+        },
       },
     );
 

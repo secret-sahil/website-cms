@@ -1,3 +1,3 @@
-import * as localStorage from './localUpload.service';
+import * as awsS3services from './awsS3.service';
 import * as upload from './fileUpload.middleware';
-export { upload, localStorage };
+export { upload, awsS3services };

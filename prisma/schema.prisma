@@ -80,8 +80,8 @@ model Application {
   coverLetter String? @db.Text
   linkedIn    String? @db.VarChar(255)
 
-  wheredidyouhear           String? @db.VarChar(255)
-  hasSubscribedToNewsletter Boolean @default(false)
+  wheredidyouhear           Wheredidyouhear 
+  hasSubscribedToNewsletter Boolean         @default(false)
 
   createdBy String   @default("system")
   updatedBy String   @default("system")
@@ -111,6 +111,14 @@ enum ApplicationStatus {
   in_review
   hired
   rejected
+}
+
+enum Wheredidyouhear {
+  friend
+  social_media
+  website
+  job_portal
+  other
 }
 
 enum RoleEnumType {

@@ -12,6 +12,16 @@ export const createJobOpening = async (
   })) as JobOpening;
 };
 
+export const createJobApplication = async (
+  input: Prisma.ApplicationUncheckedCreateInput,
+  select?: Prisma.ApplicationSelect,
+) => {
+  return await prisma.application.create({
+    data: input,
+    select,
+  });
+};
+
 export const deleteJobOpening = async (where: Prisma.JobOpeningWhereUniqueInput) => {
   return (await prisma.jobOpening.delete({
     where,
