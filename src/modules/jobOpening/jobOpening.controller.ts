@@ -34,7 +34,6 @@ export const applyJobOpeningHandler = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const resumeUUID = crypto.randomUUID();
   try {
     const {
       fullName,
@@ -49,7 +48,7 @@ export const applyJobOpeningHandler = async (
     if (!req.file) {
       return next(new AppError(400, 'Resume is required.'));
     }
-    req.file.originalname = `${resumeUUID}.pdf`;
+    req.file.originalname = `${fullName.split(' ').join('-').toLowerCase()}-${crypto.randomUUID()}.pdf`;
     const image = await awsS3services.uploadToS3(req.file!, 'resume-infutrix/');
 
     await jobOpeningServices.createJobApplication({
@@ -67,7 +66,7 @@ export const applyJobOpeningHandler = async (
 
     res.status(200).json(response.successResponse('SUCCESS', 'Created Successfully'));
   } catch (err: any) {
-    await awsS3services.deleteFromS3(`resume-infutrix/${resumeUUID}`);
+    await awsS3services.deleteFromS3(`resume-infutrix/${req.file!.originalname}`);
     if (err.code === 'P2002') {
       return next(new AppError(400, 'Dublicate entries are not allowed.'));
     }
