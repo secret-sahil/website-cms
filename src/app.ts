@@ -40,7 +40,7 @@ async function bootstrap() {
   // 2. Cors
   app.use(
     cors({
-      origin: '*',
+      origin: config.get<string>('origin'),
       credentials: true,
     }),
   );

@@ -1,26 +1,27 @@
 import bcrypt from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
+import config from 'config';
 
 const prisma = new PrismaClient();
 
 async function main() {
   await prisma.user.upsert({
     create: {
-      firstName: 'Sahil',
-      lastName: 'Kumar',
-      username: 'sahilkumar',
+      firstName: config.get<string>('appName'),
+      lastName: '',
+      username: 'admin',
       role: 'admin',
-      password: await bcrypt.hash('Infutrix@!23', 12),
+      password: await bcrypt.hash('Admin@!23', 12),
     },
     update: {
-      firstName: 'Sahil',
-      lastName: 'Kumar',
-      username: 'sahilkumar',
+      firstName: config.get<string>('appName'),
+      lastName: '',
+      username: 'admin',
       role: 'admin',
-      password: await bcrypt.hash('Infutrix@!23', 12),
+      password: await bcrypt.hash('Admin@!23', 12),
     },
     where: {
-      username: 'sahilkumar',
+      username: 'admin',
     },
   });
   await prisma.office.upsert({
