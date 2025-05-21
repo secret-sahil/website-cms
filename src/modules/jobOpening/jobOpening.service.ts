@@ -56,6 +56,7 @@ export const getAllJobOpening = async (
   pageSize: number = 10,
   where?: Prisma.JobOpeningWhereInput,
   include?: Prisma.JobOpeningInclude,
+  orderBy: Prisma.SortOrder = 'desc',
 ) => {
   const skip = (page - 1) * pageSize;
 
@@ -65,20 +66,26 @@ export const getAllJobOpening = async (
         ...where,
         title: {
           contains: search,
-          mode: 'insensitive', // Optional: case-insensitive search
+          mode: 'insensitive',
         },
       },
       skip,
       take: pageSize,
       include,
+      orderBy: {
+        createdAt: orderBy,
+      },
     }),
     prisma.jobOpening.count({
       where: {
         ...where,
         title: {
           contains: search,
-          mode: 'insensitive', // Ensure the count query matches the findMany query
+          mode: 'insensitive',
         },
+      },
+      orderBy: {
+        createdAt: orderBy,
       },
     }),
   ]);

@@ -1,66 +1,56 @@
-import { PrismaClient, Prisma, JobOpening } from '@prisma/client';
-
+import { PrismaClient, Prisma, Blog } from '@prisma/client';
 const prisma = new PrismaClient();
 
-export const createJobOpening = async (
-  input: Prisma.JobOpeningUncheckedCreateInput,
-  select?: Prisma.JobOpeningSelect,
+export const createBlog = async (
+  input: Prisma.BlogUncheckedCreateInput,
+  select?: Prisma.BlogSelect,
 ) => {
-  return (await prisma.jobOpening.create({
+  return (await prisma.blog.create({
     data: input,
     select,
-  })) as JobOpening;
+  })) as Blog;
 };
 
-export const createJobApplication = async (
-  input: Prisma.ApplicationUncheckedCreateInput,
-  select?: Prisma.ApplicationSelect,
-) => {
-  return await prisma.application.create({
-    data: input,
-    select,
-  });
-};
-
-export const deleteJobOpening = async (where: Prisma.JobOpeningWhereUniqueInput) => {
-  return (await prisma.jobOpening.delete({
+export const deleteBlog = async (where: Prisma.BlogWhereUniqueInput) => {
+  return (await prisma.blog.delete({
     where,
-  })) as JobOpening;
+  })) as Blog;
 };
 
-export const updateJobOpening = async (
-  where: Prisma.JobOpeningWhereUniqueInput,
-  data: Prisma.JobOpeningUncheckedUpdateInput,
-  select?: Prisma.JobOpeningSelect,
+export const updateBlog = async (
+  where: Prisma.BlogWhereUniqueInput,
+  data: Prisma.BlogUncheckedUpdateInput,
+  select?: Prisma.BlogSelect,
 ) => {
-  return (await prisma.jobOpening.update({
+  return (await prisma.blog.update({
     data,
     where,
     select,
-  })) as JobOpening;
+  })) as Blog;
 };
 
-export const getUniqueJobOpening = async (
-  where: Prisma.JobOpeningWhereUniqueInput,
-  select?: Prisma.JobOpeningSelect,
+export const getUniqueBlog = async (
+  where: Prisma.BlogWhereUniqueInput,
+  select?: Prisma.BlogSelect,
 ) => {
-  return (await prisma.jobOpening.findUnique({
+  return (await prisma.blog.findUnique({
     where,
     select,
-  })) as JobOpening;
+  })) as Blog;
 };
 
-export const getAllJobOpening = async (
+export const getAllBlog = async (
   search?: string,
   page: number = 1,
   pageSize: number = 10,
-  where?: Prisma.JobOpeningWhereInput,
-  include?: Prisma.JobOpeningInclude,
+  where?: Prisma.BlogWhereInput,
+  include?: Prisma.BlogInclude,
+  orderBy: Prisma.SortOrder = 'desc',
 ) => {
   const skip = (page - 1) * pageSize;
 
   const [data, total] = await Promise.all([
-    prisma.jobOpening.findMany({
+    prisma.blog.findMany({
       where: {
         ...where,
         title: {
@@ -71,14 +61,20 @@ export const getAllJobOpening = async (
       skip,
       take: pageSize,
       include,
+      orderBy: {
+        createdAt: orderBy,
+      },
     }),
-    prisma.jobOpening.count({
+    prisma.blog.count({
       where: {
         ...where,
         title: {
           contains: search,
           mode: 'insensitive', // Ensure the count query matches the findMany query
         },
+      },
+      orderBy: {
+        createdAt: orderBy,
       },
     }),
   ]);
