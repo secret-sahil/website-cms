@@ -42,7 +42,7 @@ export const getCategorySchema = object({
     page: string(),
     limit: string(),
     is_deleted: string(),
-  }),
+  }).partial(),
 });
 
 export type createCategoryInput = TypeOf<typeof createCategorySchema>['body'];

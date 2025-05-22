@@ -107,9 +107,30 @@ export const requireUser =
       }
 
       if (roles.includes(user.role)) {
+        req.hasAccess = true;
         return next();
       } else {
         return next(new AppError(401, `Unauthorized Access`));
+      }
+    } catch (err: any) {
+      next(err);
+    }
+  };
+
+export const requireUserIfAvaliable =
+  (roles: Array<User['role']>) => (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = req.user;
+
+      if (!user) {
+        return next();
+      }
+
+      if (roles.includes(user.role)) {
+        req.hasAccess = true;
+        return next();
+      } else {
+        return next();
       }
     } catch (err: any) {
       next(err);

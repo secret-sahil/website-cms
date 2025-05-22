@@ -86,9 +86,16 @@ export const getCategoryHandler = async (
 ) => {
   try {
     const { search, page, limit } = req.query;
-    const category = await categoryServices.getAllCategory(search, Number(page), Number(limit), {
-      isPublished: true,
-    });
+    const category = await categoryServices.getAllCategory(
+      search,
+      page ? Number(page) : undefined,
+      limit ? Number(limit) : undefined,
+      req.hasAccess
+        ? {}
+        : {
+            isPublished: true,
+          },
+    );
 
     res.status(200).json(response.successResponse('SUCCESS', 'Fetched successfully', category));
   } catch (err: any) {

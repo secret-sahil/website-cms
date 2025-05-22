@@ -49,13 +49,11 @@ async function bootstrap() {
   if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
   // ROUTES
+  app.get('/', defaultController.defaultController);
   app.use('/api/v1/auth', authRouter);
   app.use('/api/v1/users', userRouter);
   app.use('/api/v1/categories', categoriesRouter);
   app.use('/api/v1/careers', jobOpeningRouter);
-
-  // Testing
-  app.get('/', defaultController.defaultController);
 
   // 404 ~ not found error handler
   app.use(notFoundRoute);

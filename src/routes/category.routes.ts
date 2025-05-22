@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.get(
   '/',
-  auth.deserializeUser,
+  auth.deserializeUserIfAvaliable,
+  auth.requireUserIfAvaliable(['admin', 'content']),
   validate(categorySchema.getCategorySchema),
   categoryController.getCategoryHandler,
 );
@@ -15,6 +16,7 @@ router.get(
 router.get(
   '/:id',
   auth.deserializeUser,
+  auth.requireUser(['admin', 'content']),
   validate(categorySchema.getCategoryByIdSchema),
   categoryController.getCategoryById,
 );
@@ -22,6 +24,7 @@ router.get(
 router.post(
   '/create',
   auth.deserializeUser,
+  auth.requireUser(['admin', 'content']),
   validate(categorySchema.createCategorySchema),
   categoryController.createCategoryHandler,
 );
@@ -29,6 +32,7 @@ router.post(
 router.delete(
   '/delete/:id',
   auth.deserializeUser,
+  auth.requireUser(['admin', 'content']),
   validate(categorySchema.deleteCategorySchema),
   categoryController.deleteCategoryHandler,
 );
@@ -36,6 +40,7 @@ router.delete(
 router.patch(
   '/update/:id',
   auth.deserializeUser,
+  auth.requireUser(['admin', 'content']),
   validate(categorySchema.updateCategorySchema),
   categoryController.updateCategoryHandler,
 );

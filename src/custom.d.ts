@@ -4,6 +4,7 @@ declare global {
   namespace Express {
     interface Request {
       user?: User; // or specify a more specific type for `user`
+      hasAccess?: boolean;
     }
   }
 }
