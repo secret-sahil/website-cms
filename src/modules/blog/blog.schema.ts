@@ -7,8 +7,12 @@ export const createBlogSchema = object({
       .min(3, { message: 'Job title is too short.' })
       .max(250, { message: 'Job title is too long.' })
       .trim(),
-    description: string({ required_error: 'Job description is required.' }),
-    content: string({ required_error: 'Job content is required.' }),
+    description: string({ required_error: 'Job description is required.' }).min(30, {
+      message: 'Description is too short.',
+    }),
+    content: string({ required_error: 'Job content is required.' }).min(200, {
+      message: 'Content is too short.',
+    }),
     featuredImageId: string(),
     categoryIds: string({ required_error: 'Cate  gory is required.' }).array(),
     tags: string({ required_error: 'Tag(s) are required.' }).array(),
@@ -24,8 +28,12 @@ export const updateBlogSchema = object({
       .min(3, { message: 'Job title is too short.' })
       .max(250, { message: 'Job title is too long.' })
       .trim(),
-    description: string(),
-    content: string(),
+    description: string().min(30, {
+      message: 'Description is too short.',
+    }),
+    content: string().min(200, {
+      message: 'Content is too short.',
+    }),
     featuredImageId: string(),
     categoryIds: string().array(),
     tags: string().array(),
