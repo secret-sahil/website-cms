@@ -6,8 +6,7 @@ export const createJobOpeningSchema = object({
     title: string({ required_error: 'Job title is required.' })
       .min(3, { message: 'Job title is too short.' })
       .max(50, { message: 'Job title is too long.' })
-      .trim()
-      .toLowerCase(),
+      .trim(),
     description: string({ required_error: 'Job description is required.' }),
     locationId: string({ required_error: 'Location is required.' }),
     experience: string({ required_error: 'Experience is required.' }),
@@ -22,8 +21,7 @@ export const updateJobOpeningSchema = object({
     title: string()
       .min(3, { message: 'Job title is too short.' })
       .max(50, { message: 'Job title is too long.' })
-      .trim()
-      .toLowerCase(),
+      .trim(),
     description: string(),
     locationId: string(),
     experience: string(),

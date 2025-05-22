@@ -21,6 +21,7 @@ export const createBlogHandler = async (
       categories: {
         create: categoryIds.map((categoryId) => ({
           categoryId,
+          assignedBy: req.user!.username,
         })),
       },
       tags,
@@ -79,6 +80,7 @@ export const updateBlogHandler = async (
           deleteMany: {},
           create: categoryIds?.map((categoryId) => ({
             categoryId,
+            assignedBy: req.user!.username,
           })),
         },
         tags,
