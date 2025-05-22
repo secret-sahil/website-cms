@@ -108,10 +108,11 @@ export const getBlogHandler = async (
       search,
       page ? Number(page) : undefined,
       limit ? Number(limit) : undefined,
-      {
-        isPublished: true,
-        isDeleted: false,
-      },
+      req.hasAccess
+        ? {}
+        : {
+            isPublished: true,
+          },
       {
         featuredImage: {
           select: {

@@ -9,6 +9,7 @@ import { PrismaClient } from '@prisma/client';
 import authRouter from './routes/auth.routes';
 import userRouter from './routes/user.routes';
 import categoriesRouter from './routes/category.routes';
+import blogRouter from './routes/blog.routes';
 import jobOpeningRouter from './routes/jobOpening.routes';
 import { errorHandler, notFoundRoute } from './modules/utils/appError';
 import { defaultController } from './modules/default';
@@ -54,6 +55,7 @@ async function bootstrap() {
   app.use('/api/v1/users', userRouter);
   app.use('/api/v1/categories', categoriesRouter);
   app.use('/api/v1/careers', jobOpeningRouter);
+  app.use('/api/v1/blog', blogRouter);
 
   // 404 ~ not found error handler
   app.use(notFoundRoute);

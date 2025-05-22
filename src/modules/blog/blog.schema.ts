@@ -52,7 +52,6 @@ export const getBlogSchema = object({
     search: string(),
     page: string(),
     limit: string(),
-    is_deleted: string(),
   }).partial(),
 });
 
