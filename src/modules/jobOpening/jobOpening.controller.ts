@@ -45,11 +45,9 @@ export const applyJobOpeningHandler = async (
       wheredidyouhear,
       hasSubscribedToNewsletter,
     } = req.body;
-    if (!req.file) {
-      return next(new AppError(400, 'Resume is required.'));
-    }
-    req.file.originalname = `${fullName.split(' ').join('-').toLowerCase()}-${crypto.randomUUID()}.pdf`;
-    const image = await awsS3services.uploadToS3(req.file!, 'resume-infutrix/');
+
+    req.file!.originalname = `${fullName.split(' ').join('-').toLowerCase()}-${crypto.randomUUID()}.pdf`;
+    const resume = await awsS3services.uploadToS3(req.file!, 'resume-infutrix/');
 
     await jobOpeningServices.createJobApplication({
       fullName,
@@ -58,7 +56,7 @@ export const applyJobOpeningHandler = async (
       phone,
       coverLetter,
       linkedIn,
-      resume: image[0],
+      resume: resume[0],
       wheredidyouhear,
       hasSubscribedToNewsletter: hasSubscribedToNewsletter === 'yes',
       createdBy: fullName,
