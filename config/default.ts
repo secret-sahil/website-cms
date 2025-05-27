@@ -6,7 +6,5 @@ export default {
   accessTokenExpiresIn: 1, //days
   origin: ['http://localhost:3000'],
   // images upload
-  maxFileSize: 500000,
-  acceptedImagesType: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
   cloudfrontBaseUrl: 'https://d26yyyedhrucxb.cloudfront.net',
 };

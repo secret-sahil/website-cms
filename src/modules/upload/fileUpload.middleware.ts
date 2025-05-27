@@ -18,6 +18,13 @@ export const imageUpload = multer({
   },
 });
 
+export const fileUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1000000,
+  },
+});
+
 export const resumeUpload = multer({
   storage: multer.memoryStorage(),
   limits: {
