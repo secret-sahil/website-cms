@@ -60,9 +60,10 @@ export const updateMediaHandler = async (
   if (!req.file) {
     return next(new AppError(400, 'Media file is required.'));
   }
+  const randomSuffix = Math.random().toString(36).substring(2, 7);
   const newFilename = req.file.originalname.includes('.')
-    ? req.file.originalname.replace(/(\.[^.]*)$/, `-${crypto.randomUUID()}$1`)
-    : req.file.originalname + `-${crypto.randomUUID()}`;
+    ? req.file.originalname.replace(/(\.[^.]*)$/, `-${randomSuffix}$1`)
+    : req.file.originalname + `-${randomSuffix}`;
   req.file.originalname = newFilename;
 
   try {
@@ -76,6 +77,7 @@ export const updateMediaHandler = async (
       {
         url: image[0],
         type: getMediaType(req.file.mimetype),
+        name: newFilename,
         updatedBy: req.user!.username,
       },
     );
