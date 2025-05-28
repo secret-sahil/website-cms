@@ -44,7 +44,7 @@ export const getAllMedia = async (
   page: number = 1,
   pageSize: number = 10,
   where?: Prisma.MediaWhereInput,
-  select?: Prisma.MediaSelect,
+  include?: Prisma.MediaInclude,
 ) => {
   const skip = (page - 1) * pageSize;
 
@@ -53,7 +53,7 @@ export const getAllMedia = async (
       where: where,
       skip,
       take: pageSize,
-      select,
+      include,
     }),
     prisma.media.count({
       where: where,
