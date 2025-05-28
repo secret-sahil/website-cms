@@ -10,9 +10,10 @@ export const createMediaHandler = async (req: Request, res: Response, next: Next
   if (!req.file) {
     return next(new AppError(400, 'Media file is required.'));
   }
+  const randomSuffix = Math.random().toString(36).substring(2, 7);
   const newFilename = req.file.originalname.includes('.')
-    ? req.file.originalname.replace(/(\.[^.]*)$/, `-${crypto.randomUUID()}$1`)
-    : req.file.originalname + `-${crypto.randomUUID()}`;
+    ? req.file.originalname.replace(/(\.[^.]*)$/, `-${randomSuffix}$1`)
+    : req.file.originalname + `-${randomSuffix}`;
   req.file.originalname = newFilename;
 
   try {
@@ -20,6 +21,7 @@ export const createMediaHandler = async (req: Request, res: Response, next: Next
 
     await mediaServices.createMedia({
       url: image[0],
+      name: newFilename,
       type: getMediaType(req.file.mimetype),
       createdBy: req.user!.username,
     });
@@ -38,9 +40,9 @@ export const deleteMediaHandler = async (
 ) => {
   try {
     const { id } = req.params;
-
+    const media = await mediaServices.getUniqueMedia({ id });
     await mediaServices.deleteMedia({ id });
-
+    await awsS3services.deleteFromS3(`media-infutrix/${media.name}`);
     res.status(200).json(response.successResponse('SUCCESS', 'Media Deleted Successfully'));
   } catch (err: any) {
     if (err.code === 'P2003') {
@@ -80,6 +82,7 @@ export const updateMediaHandler = async (
 
     res.status(200).json(response.successResponse('SUCCESS', 'Updated Successfully'));
   } catch (err: any) {
+    await awsS3services.deleteFromS3(`media-infutrix/${newFilename}`);
     if (err.code === 'P2002') {
       return next(new AppError(400, 'Dublicate entries are not allowed.'));
     }

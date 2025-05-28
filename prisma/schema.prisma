@@ -117,7 +117,7 @@ model Blog {
   description     String @db.Text
   content         String @db.Text
   featuredImageId String
-  featuredImage   Media? @relation(fields: [featuredImageId], references: [id])
+  featuredImage   Media  @relation(fields: [featuredImageId], references: [id])
 
   categories CategoriesOnBlogs[]
   tags       String[]            @db.VarChar(255)
@@ -150,14 +150,14 @@ model CategoriesOnBlogs {
 }
 
 model Media {
-  id   String    @id @default(uuid())
-  url  String
-  type MediaType
-
-  createdBy String   @default("system")
-  updatedBy String   @default("system")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(uuid())
+  url       String
+  type      MediaType
+  name      String    @unique @db.VarChar(255)
+  createdBy String    @default("system")
+  updatedBy String    @default("system")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   blogs     Blog[]
 }
 
