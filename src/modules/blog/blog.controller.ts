@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { response } from '../utils';
 import { blogSchema, blogServices } from '.';
 import AppError from '../utils/appError';
-import { Slugify } from '../utils/functions';
+import { isUUID, Slugify } from '../utils/functions';
 
 export const createBlogHandler = async (
   req: Request<{}, {}, blogSchema.createBlogInput>,
@@ -168,22 +168,16 @@ export const getBlogHandler = async (
 };
 
 export const getUniqueBlog = async (
-  req: Request<
-    blogSchema.getUniqueBlogInput['params'],
-    {},
-    {},
-    blogSchema.getUniqueBlogInput['query']
-  >,
+  req: Request<blogSchema.getUniqueBlogInput>,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const { id } = req.params;
-    const { slug } = req.query;
     const blogs = await blogServices.getUniqueBlog(
       {
-        id,
-        slug,
+        id: isUUID(id) ? id : undefined,
+        slug: !isUUID(id) ? id : undefined,
         ...(req.hasAccess
           ? {}
           : {

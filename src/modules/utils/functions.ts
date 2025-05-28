@@ -19,3 +19,8 @@ export function getMediaType(mimetype: string): MediaType {
   if (mimetype === 'application/pdf') return MediaType.pdf;
   return MediaType.other;
 }
+
+export function isUUID(str: string): boolean {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(str);
+}

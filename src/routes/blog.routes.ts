@@ -15,8 +15,8 @@ router.get(
 
 router.get(
   '/:id',
-  auth.deserializeUser,
-  auth.requireUser(['admin', 'content']),
+  auth.deserializeUserIfAvaliable,
+  auth.requireUserIfAvaliable(['admin', 'content']),
   validate(blogSchema.getUniqueBlog),
   blogController.getUniqueBlog,
 );

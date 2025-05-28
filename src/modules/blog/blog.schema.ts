@@ -49,11 +49,8 @@ export const deleteBlogSchema = object({
 
 export const getUniqueBlog = object({
   params: object({
-    id: string().uuid('Invalid id format.'),
-  }).partial(),
-  query: object({
-    slug: string(),
-  }).partial(),
+    id: string({ required_error: 'Id is required.' }),
+  }),
 });
 
 export const getBlogSchema = object({
@@ -83,5 +80,5 @@ export type applyBlogInput = TypeOf<typeof applyBlogSchema>['body'];
 export type createBlogInput = TypeOf<typeof createBlogSchema>['body'];
 export type updateBlogInput = TypeOf<typeof updateBlogSchema>;
 export type deleteBlogInput = TypeOf<typeof deleteBlogSchema>['params'];
-export type getUniqueBlogInput = TypeOf<typeof getUniqueBlog>;
+export type getUniqueBlogInput = TypeOf<typeof getUniqueBlog>['params'];
 export type getBlogInput = TypeOf<typeof getBlogSchema>['query'];
