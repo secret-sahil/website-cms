@@ -10,6 +10,7 @@ import authRouter from './routes/auth.routes';
 import userRouter from './routes/user.routes';
 import categoriesRouter from './routes/category.routes';
 import blogRouter from './routes/blog.routes';
+import leadRouter from './routes/lead.routes';
 import jobOpeningRouter from './routes/jobOpening.routes';
 import meidaRouter from './routes/media.routes';
 import { errorHandler, notFoundRoute } from './modules/utils/appError';
@@ -57,6 +58,7 @@ async function bootstrap() {
   app.use('/api/v1/categories', categoriesRouter);
   app.use('/api/v1/careers', jobOpeningRouter);
   app.use('/api/v1/blog', blogRouter);
+  app.use('/api/v1/lead', leadRouter);
   app.use('/api/v1/media', meidaRouter);
 
   // 404 ~ not found error handler

@@ -161,6 +161,27 @@ model Media {
   blogs     Blog[]
 }
 
+model Lead {
+  id       String @id @default(uuid())
+  fullName String @db.VarChar(255)
+  email    String @db.VarChar(255)
+  phone    String @db.VarChar(20)
+
+  // optional fields
+  jobTitle JobTitles?
+  company  String?    @db.Text
+  message  String?    @db.Text
+  budget   String?    @db.VarChar(50)
+  source   String     @db.Text
+
+  isOpened Boolean @default(false)
+
+  createdBy String   @default("system")
+  updatedBy String   @default("system")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum MediaType {
   image
   video
@@ -182,6 +203,15 @@ enum Wheredidyouhear {
   social_media
   website
   job_portal
+  other
+}
+
+enum JobTitles {
+  entrepreneur
+  manager
+  director
+  clevel
+  student
   other
 }
 
