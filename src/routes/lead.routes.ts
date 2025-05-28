@@ -5,34 +5,16 @@ import { leadController, leadSchema } from '../modules/lead';
 
 const router = express.Router();
 
-router.get(
-  '/',
-  auth.deserializeUserIfAvaliable,
-  auth.requireUserIfAvaliable(['admin', 'content']),
-  validate(leadSchema.getLeadSchema),
-  leadController.getLeadHandler,
-);
+router.use(auth.deserializeUser, auth.requireUser(['admin', 'sales']));
 
-router.get(
-  '/:id',
-  auth.deserializeUserIfAvaliable,
-  auth.requireUserIfAvaliable(['admin', 'content']),
-  validate(leadSchema.getUniqueLead),
-  leadController.getUniqueLead,
-);
+router.get('/', validate(leadSchema.getLeadSchema), leadController.getLeadHandler);
 
-router.post(
-  '/create',
-  auth.deserializeUser,
-  auth.requireUser(['admin', 'content']),
-  validate(leadSchema.createLeadSchema),
-  leadController.createLeadHandler,
-);
+router.get('/:id', validate(leadSchema.getUniqueLead), leadController.getUniqueLead);
+
+router.post('/create', validate(leadSchema.createLeadSchema), leadController.createLeadHandler);
 
 router.patch(
   '/update/:id',
-  auth.deserializeUser,
-  auth.requireUser(['admin', 'content']),
   validate(leadSchema.updateLeadSchema),
   leadController.updateLeadHandler,
 );
