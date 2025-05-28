@@ -1,12 +1,15 @@
 import { MediaType } from '@prisma/client';
 
 export function Slugify(input: string): string {
-  return input
+  const randomSuffix = Math.random().toString(36).substring(2, 7);
+  const slug = input
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9\s]/g, '') // Remove everything except letters, numbers, and spaces
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/-+/g, '-'); // Collapse multiple dashes
+    .replace(/[^a-z0-9\s]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+
+  return `${slug}-${randomSuffix}`;
 }
 
 export function getMediaType(mimetype: string): MediaType {
