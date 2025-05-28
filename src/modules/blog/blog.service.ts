@@ -53,7 +53,7 @@ export const getAllBlog = async (
   page: number = 1,
   pageSize: number = 10,
   where?: Prisma.BlogWhereInput,
-  include?: Prisma.BlogInclude,
+  select?: Prisma.BlogSelect,
   orderBy: Prisma.SortOrder = 'desc',
 ) => {
   const skip = (page - 1) * pageSize;
@@ -70,7 +70,7 @@ export const getAllBlog = async (
       },
       skip,
       take: pageSize,
-      include,
+      select,
       orderBy: {
         createdAt: orderBy,
       },

@@ -116,6 +116,10 @@ export const getBlogHandler = async (
             isPublished: true,
           },
       {
+        title: true,
+        description: true,
+        slug: true,
+        content: false,
         featuredImage: {
           select: {
             id: true,

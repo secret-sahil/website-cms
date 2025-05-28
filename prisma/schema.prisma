@@ -127,7 +127,6 @@ model Blog {
   author   User?  @relation(fields: [authorId], references: [id])
 
   isPublished Boolean @default(false)
-  isFeatured  Boolean @default(false)
   isDeleted   Boolean @default(false)
 
   createdBy String   @default("system")
