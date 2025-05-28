@@ -3,6 +3,7 @@ import { response } from '../utils';
 import { jobOpeningSchema, jobOpeningServices } from '.';
 import AppError from '../utils/appError';
 import { awsS3services } from '../upload';
+import crypto from 'crypto';
 
 export const createJobOpeningHandler = async (
   req: Request<{}, {}, jobOpeningSchema.createJobOpeningInput>,

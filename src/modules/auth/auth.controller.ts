@@ -185,7 +185,6 @@ export const loginWithPasswordHandler = async (
       res.status(400).json(response.errorResponse('FAIL', 'Wrong Password'));
     }
   } catch (err: any) {
-    console.log(err);
     next(err);
   }
 };
