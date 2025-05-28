@@ -26,7 +26,9 @@ export const createMediaHandler = async (req: Request, res: Response, next: Next
       createdBy: req.user!.username,
     });
 
-    res.status(200).json(response.successResponse('SUCCESS', 'Created Successfully'));
+    res
+      .status(200)
+      .json(response.successResponse('SUCCESS', 'Created Successfully', { image: image[0] }));
   } catch (err: any) {
     await awsS3services.deleteFromS3(`media-infutrix/${newFilename}`);
     next(err);
@@ -82,7 +84,9 @@ export const updateMediaHandler = async (
       },
     );
 
-    res.status(200).json(response.successResponse('SUCCESS', 'Updated Successfully'));
+    res
+      .status(200)
+      .json(response.successResponse('SUCCESS', 'Updated Successfully', { image: image[0] }));
   } catch (err: any) {
     await awsS3services.deleteFromS3(`media-infutrix/${newFilename}`);
     if (err.code === 'P2002') {
