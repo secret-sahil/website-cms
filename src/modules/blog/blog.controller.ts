@@ -19,7 +19,7 @@ export const createBlogHandler = async (
       content,
       featuredImageId,
       categories: {
-        create: categoryIds.map((categoryId) => ({
+        create: categoryIds?.map((categoryId) => ({
           categoryId,
           assignedBy: req.user!.username,
         })),
@@ -116,10 +116,12 @@ export const getBlogHandler = async (
             isPublished: true,
           },
       {
+        id: true,
         title: true,
         description: true,
         slug: true,
         content: false,
+        tags: true,
         featuredImage: {
           select: {
             id: true,
@@ -147,6 +149,15 @@ export const getBlogHandler = async (
             },
           },
         },
+        ...(req.hasAccess
+          ? {
+              isPublished: true,
+              createdAt: true,
+              updatedAt: true,
+              createdBy: true,
+              updatedBy: true,
+            }
+          : {}),
       },
     );
 
@@ -166,8 +177,19 @@ export const getBlogById = async (
     const blogs = await blogServices.getUniqueBlog(
       {
         id,
+        ...(req.hasAccess
+          ? {}
+          : {
+              isPublished: true,
+            }),
       },
       {
+        id: true,
+        title: true,
+        description: true,
+        slug: true,
+        content: true,
+        tags: true,
         featuredImage: {
           select: {
             id: true,
@@ -195,6 +217,16 @@ export const getBlogById = async (
             },
           },
         },
+        ...(req.hasAccess
+          ? {
+              isPublished: true,
+              createdAt: true,
+              updatedAt: true,
+              createdBy: true,
+              updatedBy: true,
+              featuredImageId: true,
+            }
+          : {}),
       },
     );
 

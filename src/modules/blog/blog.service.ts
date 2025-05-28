@@ -37,14 +37,14 @@ export const updateBlog = async (
 
 export const getUniqueBlog = async (
   where: Prisma.BlogWhereUniqueInput,
-  include?: Prisma.BlogSelect,
+  select?: Prisma.BlogSelect,
 ) => {
   return (await prisma.blog.findUnique({
     where: {
       ...where,
       isDeleted: false,
     },
-    include,
+    select,
   })) as Blog;
 };
 
