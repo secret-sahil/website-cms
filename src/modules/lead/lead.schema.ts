@@ -1,5 +1,5 @@
 import { JobTitles } from '@prisma/client';
-import { boolean, nativeEnum, object, string, TypeOf } from 'zod';
+import { boolean, nativeEnum, number, object, string, TypeOf } from 'zod';
 
 export const createLeadSchema = object({
   body: object({
@@ -12,7 +12,7 @@ export const createLeadSchema = object({
     companySize: string().optional(),
     company: string().optional(),
     message: string({}).optional(),
-    budget: string({}).optional(),
+    budget: number({}).optional(),
     source: string({ required_error: 'Source is required.' }),
   }),
 });

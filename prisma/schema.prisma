@@ -172,7 +172,7 @@ model Lead {
   company     String?    @db.VarChar(255)
   companySize String?    @db.VarChar(50)
   message     String?    @db.Text
-  budget      String?    @db.VarChar(50)
+  budget      Float?
   source      String     @db.VarChar(255)
 
   isOpened Boolean @default(false)
