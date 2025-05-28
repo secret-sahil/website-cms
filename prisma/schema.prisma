@@ -168,11 +168,12 @@ model Lead {
   phone    String @db.VarChar(20)
 
   // optional fields
-  jobTitle JobTitles?
-  company  String?    @db.Text
-  message  String?    @db.Text
-  budget   String?    @db.VarChar(50)
-  source   String     @db.Text
+  jobTitle    JobTitles?
+  company     String?    @db.VarChar(255)
+  companySize String?    @db.VarChar(50)
+  message     String?    @db.Text
+  budget      String?    @db.VarChar(50)
+  source      String     @db.VarChar(255)
 
   isOpened Boolean @default(false)
 

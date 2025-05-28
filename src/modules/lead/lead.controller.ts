@@ -9,7 +9,8 @@ export const createLeadHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const { fullName, email, phone, jobTitle, company, message, budget, source } = req.body;
+    const { fullName, email, phone, jobTitle, companySize, company, message, budget, source } =
+      req.body;
 
     await leadServices.createLead({
       fullName,
@@ -17,6 +18,7 @@ export const createLeadHandler = async (
       phone,
       jobTitle,
       company,
+      companySize,
       message,
       budget,
       source,

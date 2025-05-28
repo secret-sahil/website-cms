@@ -9,6 +9,7 @@ export const createLeadSchema = object({
       message: 'Invalid phone number.',
     }),
     jobTitle: nativeEnum(JobTitles).optional(),
+    companySize: string().optional(),
     company: string().optional(),
     message: string({}).optional(),
     budget: string({}).optional(),
