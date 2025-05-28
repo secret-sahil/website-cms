@@ -167,16 +167,23 @@ export const getBlogHandler = async (
   }
 };
 
-export const getBlogById = async (
-  req: Request<blogSchema.getBlogByIdInput>,
+export const getUniqueBlog = async (
+  req: Request<
+    blogSchema.getUniqueBlogInput['params'],
+    {},
+    {},
+    blogSchema.getUniqueBlogInput['query']
+  >,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const { id } = req.params;
+    const { slug } = req.query;
     const blogs = await blogServices.getUniqueBlog(
       {
         id,
+        slug,
         ...(req.hasAccess
           ? {}
           : {

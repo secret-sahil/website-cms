@@ -17,8 +17,8 @@ router.get(
   '/:id',
   auth.deserializeUser,
   auth.requireUser(['admin', 'content']),
-  validate(blogSchema.getBlogByIdSchema),
-  blogController.getBlogById,
+  validate(blogSchema.getUniqueBlog),
+  blogController.getUniqueBlog,
 );
 
 router.post(
