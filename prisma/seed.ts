@@ -24,25 +24,6 @@ async function main() {
       username: 'admin',
     },
   });
-  await prisma.user.upsert({
-    create: {
-      firstName: 'Ajay',
-      lastName: 'Suri',
-      username: 'ajaysuri',
-      role: 'content',
-      password: await bcrypt.hash('Ajay@123', 12),
-    },
-    update: {
-      firstName: 'Ajay',
-      lastName: 'Suri',
-      username: 'ajaysuri',
-      role: 'content',
-      password: await bcrypt.hash('Ajay@123', 12),
-    },
-    where: {
-      username: 'ajaysuri',
-    },
-  });
   await prisma.office.upsert({
     create: {
       id: '8db7612e-3d7f-482d-b094-7c2568628b24',
