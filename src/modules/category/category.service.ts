@@ -61,6 +61,9 @@ export const getAllCategory = async (
       skip,
       take: pageSize,
       select,
+      orderBy: {
+        createdAt: 'desc',
+      },
     }),
     prisma.category.count({
       where: {
@@ -69,6 +72,9 @@ export const getAllCategory = async (
           contains: search,
           mode: 'insensitive', // Ensure the count query matches the findMany query
         },
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     }),
   ]);

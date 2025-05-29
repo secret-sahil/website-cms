@@ -54,9 +54,15 @@ export const getAllMedia = async (
       skip,
       take: pageSize,
       include,
+      orderBy: {
+        createdAt: 'desc',
+      },
     }),
     prisma.media.count({
       where: where,
+      orderBy: {
+        createdAt: 'desc',
+      },
     }),
   ]);
 
