@@ -47,7 +47,7 @@ export const updateLeadHandler = async (
         id,
       },
       {
-        isOpened,
+        isOpened: isOpened ? isOpened : undefined,
         updatedBy: req.user!.username,
       },
     );
