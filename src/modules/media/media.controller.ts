@@ -117,6 +117,14 @@ export const getMediaHandler = async (
       {
         ...(type ? { type: { in: type } } : {}),
       },
+      {
+        blogs: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
     );
 
     res.status(200).json(response.successResponse('SUCCESS', 'Fetched successfully', media));
