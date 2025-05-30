@@ -29,7 +29,7 @@ const app = express();
 
 async function bootstrap() {
   // TEMPLATE ENGINE
-  app.set('view engine', 'pug');
+  app.set('view engine', 'hbs');
   app.set('views', `${__dirname}/views`);
 
   // MIDDLEWARE
@@ -60,7 +60,9 @@ async function bootstrap() {
   app.use('/api/v1/blog', blogRouter);
   app.use('/api/v1/lead', leadRouter);
   app.use('/api/v1/media', meidaRouter);
-
+  app.get('/test', (req, res) => {
+    res.render('leadFormResponse');
+  });
   // 404 ~ not found error handler
   app.use(notFoundRoute);
 

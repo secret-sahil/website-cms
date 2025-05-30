@@ -6,6 +6,12 @@ export default {
   refreshTokenPrivateKey: 'JWT_REFRESH_TOKEN_PRIVATE_KEY',
   refreshTokenPublicKey: 'JWT_REFRESH_TOKEN_PUBLIC_KEY',
 
+  smtp: {
+    service: 'EMAIL_HOST',
+    user: 'EMAIL_USER',
+    pass: 'EMAIL_PASS',
+  },
+
   awsRegion: 'AWS_REGION',
   awsAccessKeyID: 'AWS_ACCESS_KEY_ID',
   awsSecretAccessKey: 'AWS_SECRET_ACCESS_KEY',

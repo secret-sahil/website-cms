@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { response } from '../utils';
 import { leadSchema, leadServices } from '.';
 import AppError from '../utils/appError';
+import Email from '../email/email';
 
 export const createLeadHandler = async (
   req: Request<{}, {}, leadSchema.createLeadInput>,
@@ -23,7 +24,7 @@ export const createLeadHandler = async (
       budget,
       source,
     });
-
+    new Email({ email, context: { fullName } }).sendLeadFormResponseMail();
     res.status(200).json(response.successResponse('SUCCESS', 'Created Successfully'));
   } catch (err: any) {
     if (err.code === 'P2002') {
@@ -74,7 +75,6 @@ export const getLeadHandler = async (
       page ? Number(page) : undefined,
       limit ? Number(limit) : undefined,
     );
-
     res.status(200).json(response.successResponse('SUCCESS', 'Fetched successfully', lead));
   } catch (err: any) {
     next(err);
