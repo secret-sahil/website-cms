@@ -53,7 +53,7 @@ export const getUniqueJobOpening = async (
 export const getAllJobOpening = async (
   search?: string,
   page: number = 1,
-  pageSize: number = 10,
+  pageSize: number = 999999999999999,
   where?: Prisma.JobOpeningWhereInput,
   include?: Prisma.JobOpeningInclude,
   orderBy: Prisma.SortOrder = 'desc',

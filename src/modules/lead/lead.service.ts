@@ -48,7 +48,7 @@ export const getUniqueLead = async (
 export const getAllLead = async (
   search?: string,
   page: number = 1,
-  pageSize: number = 10,
+  pageSize: number = Infinity,
   where?: Prisma.LeadWhereInput,
   select?: Prisma.LeadSelect,
   orderBy: Prisma.SortOrder = 'desc',

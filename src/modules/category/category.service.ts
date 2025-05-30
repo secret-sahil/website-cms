@@ -43,7 +43,7 @@ export const getUniqueCategory = async (
 export const getAllCategory = async (
   search?: string,
   page: number = 1,
-  pageSize: number = 10,
+  pageSize: number = 999999999999999,
   where?: Prisma.CategoryWhereInput,
   select?: Prisma.CategorySelect,
 ) => {

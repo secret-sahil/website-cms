@@ -42,7 +42,7 @@ export const getUniqueMedia = async (
 
 export const getAllMedia = async (
   page: number = 1,
-  pageSize: number = 10,
+  pageSize: number = 999999999999999,
   where?: Prisma.MediaWhereInput,
   include?: Prisma.MediaInclude,
 ) => {

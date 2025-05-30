@@ -51,7 +51,7 @@ export const getUniqueBlog = async (
 export const getAllBlog = async (
   search?: string,
   page: number = 1,
-  pageSize: number = 10,
+  pageSize: number = 999999999999999,
   where?: Prisma.BlogWhereInput,
   select?: Prisma.BlogSelect,
   orderBy: Prisma.SortOrder = 'desc',
