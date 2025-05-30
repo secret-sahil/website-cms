@@ -3,6 +3,7 @@ import { response } from '../utils';
 import { leadSchema, leadServices } from '.';
 import AppError from '../utils/appError';
 import Email from '../email/email';
+import { encryptData } from '../utils/functions';
 
 export const createLeadHandler = async (
   req: Request<{}, {}, leadSchema.createLeadInput>,
@@ -15,12 +16,12 @@ export const createLeadHandler = async (
 
     await leadServices.createLead({
       fullName,
-      email,
-      phone,
+      email: encryptData(email)!,
+      phone: encryptData(phone)!,
       jobTitle,
-      company,
+      company: encryptData(company),
       companySize,
-      message,
+      message: encryptData(message),
       budget,
       source,
     });
