@@ -43,11 +43,11 @@ export const getUniqueCategory = async (
 export const getAllCategory = async (
   search?: string,
   page: number = 1,
-  pageSize: number = 999999999999999,
+  pageSize?: number,
   where?: Prisma.CategoryWhereInput,
   select?: Prisma.CategorySelect,
 ) => {
-  const skip = (page - 1) * pageSize;
+  const skip = pageSize ? (page - 1) * pageSize : 0;
 
   const [data, total] = await Promise.all([
     prisma.category.findMany({
@@ -83,6 +83,6 @@ export const getAllCategory = async (
     data,
     total,
     page,
-    totalPages: Math.ceil(total / pageSize),
+    totalPages: pageSize ? Math.ceil(total / pageSize) : 1,
   };
 };

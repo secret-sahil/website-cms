@@ -42,11 +42,11 @@ export const getUniqueMedia = async (
 
 export const getAllMedia = async (
   page: number = 1,
-  pageSize: number = 999999999999999,
+  pageSize?: number,
   where?: Prisma.MediaWhereInput,
   include?: Prisma.MediaInclude,
 ) => {
-  const skip = (page - 1) * pageSize;
+  const skip = pageSize ? (page - 1) * pageSize : 0;
 
   const [data, total] = await Promise.all([
     prisma.media.findMany({
@@ -70,6 +70,6 @@ export const getAllMedia = async (
     data,
     total,
     page,
-    totalPages: Math.ceil(total / pageSize),
+    totalPages: pageSize ? Math.ceil(total / pageSize) : 1,
   };
 };
