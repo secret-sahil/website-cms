@@ -48,12 +48,12 @@ export const getUniqueLead = async (
 export const getAllLead = async (
   search?: string,
   page: number = 1,
-  pageSize: number = Infinity,
+  pageSize?: number,
   where?: Prisma.LeadWhereInput,
   select?: Prisma.LeadSelect,
   orderBy: Prisma.SortOrder = 'desc',
 ) => {
-  const skip = (page - 1) * pageSize;
+  const skip = pageSize ? (page - 1) * pageSize : 0;
 
   const [data, total] = await Promise.all([
     prisma.lead.findMany({
@@ -89,6 +89,6 @@ export const getAllLead = async (
     data,
     total,
     page,
-    totalPages: Math.ceil(total / pageSize),
+    totalPages: pageSize ? Math.ceil(total / pageSize) : 1,
   };
 };
