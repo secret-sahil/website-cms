@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import handlebars from 'handlebars';
 import juice from 'juice';
+import Mail from 'nodemailer/lib/mailer';
 
 const smtp = config.get<{
   service: string;
@@ -19,6 +20,7 @@ interface EmailTemplate {
 export default class Email {
   #to: string;
   #from: string;
+  #replyTo: string;
   #context?: Record<string, any>;
   constructor(
     private user: {
@@ -28,7 +30,8 @@ export default class Email {
   ) {
     this.#context = user.context;
     this.#to = user.email;
-    this.#from = `Infutrix <sales@infutrix.com>`;
+    this.#from = `Infutrix Technologies <no-reply@infutrix.com>`;
+    this.#replyTo = `Infutrix Technologies <no-reply@infutrix.com>`;
   }
 
   private newTransport() {
@@ -49,8 +52,9 @@ export default class Email {
       const htmlWithData = compiledTemplate(this.#context);
       const html = juice(htmlWithData);
 
-      const mailOptions = {
+      const mailOptions: Mail.Options = {
         from: this.#from,
+        replyTo: this.#replyTo,
         to: this.#to,
         subject,
         html,
