@@ -8,7 +8,7 @@
     "start": "node dist/src/app.js",
     "db:migrate": "yarn prisma generate && yarn prisma migrate dev --name user-entity --create-only",
     "db:push": "yarn prisma db push",
-    "build": "tsc && copyfiles -u 1 src/views/**/*.hbs dist/src/views",
+    "build": "tsc && copyfiles -u 1 src/views/**/*.hbs dist/src",
     "lint": "eslint",
     "format": "eslint --fix",
     "test": "yarn lint",
