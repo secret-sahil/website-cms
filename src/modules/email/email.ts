@@ -12,6 +12,8 @@ const smtp = config.get<{
   pass: string;
 }>('smtp');
 
+const appName = config.get<string>('appName');
+
 interface EmailTemplate {
   template: string;
   subject: string;
@@ -30,8 +32,8 @@ export default class Email {
   ) {
     this.#context = user.context;
     this.#to = user.email;
-    this.#from = `Infutrix Technologies <no-reply@infutrix.com>`;
-    this.#replyTo = `Infutrix Technologies <no-reply@infutrix.com>`;
+    this.#from = `${appName} <${smtp.user}>`;
+    this.#replyTo = `${appName} <${smtp.user}>`;
   }
 
   private newTransport() {

@@ -1,5 +1,5 @@
 export default {
-  appName: 'Infutrix',
+  appName: 'Infutrix Technologies',
   verificationTokenExpiresIn: 10, //minutes
   redisCacheExpiresIn: 30, //days
   refreshTokenExpiresIn: 30, //days
