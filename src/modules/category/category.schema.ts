@@ -1,4 +1,4 @@
-import { boolean, object, string, TypeOf } from 'zod';
+import { object, string, TypeOf } from 'zod';
 
 export const createCategorySchema = object({
   body: object({
@@ -18,7 +18,6 @@ export const updateCategorySchema = object({
       .min(3, { message: 'Name is too short.' })
       .max(30, { message: 'Name is too long.' })
       .trim(),
-    isPublished: boolean(),
   }).partial(),
 });
 

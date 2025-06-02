@@ -100,8 +100,6 @@ model Category {
   name  String              @db.VarChar(255)
   blogs CategoriesOnBlogs[]
 
-  isPublished Boolean @default(false)
-
   createdBy String   @default("system")
   updatedBy String   @default("system")
   createdAt DateTime @default(now())

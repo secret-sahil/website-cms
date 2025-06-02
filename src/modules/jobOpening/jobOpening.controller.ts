@@ -135,14 +135,16 @@ export const getJobOpeningHandler = async (
 ) => {
   try {
     const { search, page, limit } = req.query;
-
+    console.log(req.hasAccess);
     const jobOpening = await jobOpeningServices.getAllJobOpening(
       search,
       page ? Number(page) : undefined,
       limit ? Number(limit) : undefined,
-      {
-        isPublished: true,
-      },
+      req.hasAccess
+        ? {}
+        : {
+            isPublished: true,
+          },
       {
         location: {
           select: {
@@ -166,9 +168,24 @@ export const getJobOpeningById = async (
 ) => {
   try {
     const { id } = req.params;
-    const jobOpenings = await jobOpeningServices.getUniqueJobOpening({
-      id,
-    });
+    const jobOpenings = await jobOpeningServices.getUniqueJobOpening(
+      {
+        id,
+        ...(req.hasAccess
+          ? {}
+          : {
+              isPublished: true,
+            }),
+      },
+      {
+        location: {
+          select: {
+            id: true,
+            city: true,
+          },
+        },
+      },
+    );
 
     res.status(200).json(response.successResponse('SUCCESS', 'Fetched successfully', jobOpenings));
   } catch (err: any) {

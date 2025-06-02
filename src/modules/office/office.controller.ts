@@ -1,20 +1,23 @@
 import { NextFunction, Request, Response } from 'express';
 import { response } from '../utils';
-import { categorySchema, categoryServices } from '.';
-import { Slugify } from '../utils/functions';
+import { officeSchema, officeServices } from '.';
 import AppError from '../utils/appError';
 
-export const createCategoryHandler = async (
-  req: Request<{}, {}, categorySchema.createCategoryInput>,
+export const createOfficeHandler = async (
+  req: Request<{}, {}, officeSchema.createOfficeInput>,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const { name } = req.body;
+    const { name, address, city, state, country, postalCode } = req.body;
 
-    await categoryServices.createCategory({
+    await officeServices.createOffice({
       name,
-      slug: Slugify(name),
+      address,
+      city,
+      state,
+      country,
+      postalCode,
       createdBy: req.user!.username,
     });
 
@@ -27,17 +30,17 @@ export const createCategoryHandler = async (
   }
 };
 
-export const deleteCategoryHandler = async (
-  req: Request<categorySchema.deleteCategoryInput, {}, {}>,
+export const deleteOfficeHandler = async (
+  req: Request<officeSchema.deleteOfficeInput, {}, {}>,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const { id } = req.params;
 
-    await categoryServices.deleteCategory({ id });
+    await officeServices.deleteOffice({ id });
 
-    res.status(200).json(response.successResponse('SUCCESS', 'Category Deleted Successfully'));
+    res.status(200).json(response.successResponse('SUCCESS', 'Office Deleted Successfully'));
   } catch (err: any) {
     if (err.code === 'P2003') {
       return next(new AppError(400, "Can't delete data, it's used in other tables."));
@@ -46,25 +49,30 @@ export const deleteCategoryHandler = async (
   }
 };
 
-export const updateCategoryHandler = async (
+export const updateOfficeHandler = async (
   req: Request<
-    categorySchema.updateCategoryInput['params'],
+    officeSchema.updateOfficeInput['params'],
     {},
-    categorySchema.updateCategoryInput['body']
+    officeSchema.updateOfficeInput['body']
   >,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, address, city, state, country, postalCode } = req.body;
 
-    await categoryServices.updateCategory(
+    await officeServices.updateOffice(
       {
         id,
       },
       {
         name,
+        address,
+        city,
+        state,
+        country,
+        postalCode,
         updatedBy: req.user!.username,
       },
     );
@@ -78,37 +86,37 @@ export const updateCategoryHandler = async (
   }
 };
 
-export const getCategoryHandler = async (
-  req: Request<{}, {}, {}, categorySchema.getCategoryInput>,
+export const getOfficeHandler = async (
+  req: Request<{}, {}, {}, officeSchema.getOfficeInput>,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const { search, page, limit } = req.query;
-    const category = await categoryServices.getAllCategory(
+    const office = await officeServices.getAllOffice(
       search,
       page ? Number(page) : undefined,
       limit ? Number(limit) : undefined,
     );
 
-    res.status(200).json(response.successResponse('SUCCESS', 'Fetched successfully', category));
+    res.status(200).json(response.successResponse('SUCCESS', 'Fetched successfully', office));
   } catch (err: any) {
     next(err);
   }
 };
 
-export const getCategoryById = async (
-  req: Request<categorySchema.getCategoryByIdInput>,
+export const getOfficeById = async (
+  req: Request<officeSchema.getOfficeByIdInput>,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const { id } = req.params;
-    const categorys = await categoryServices.getUniqueCategory({
+    const offices = await officeServices.getUniqueOffice({
       id,
     });
 
-    res.status(200).json(response.successResponse('SUCCESS', 'Fetched successfully', categorys));
+    res.status(200).json(response.successResponse('SUCCESS', 'Fetched successfully', offices));
   } catch (err: any) {
     next(err);
   }

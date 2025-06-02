@@ -8,13 +8,16 @@ const router = express.Router();
 
 router.get(
   '/',
+  auth.deserializeUserIfAvaliable,
+  auth.requireUserIfAvaliable(['admin', 'hr']),
   validate(jobOpeningSchema.getJobOpeningSchema),
   jobOpeningController.getJobOpeningHandler,
 );
 
 router.get(
   '/:id',
-  auth.deserializeUser,
+  auth.deserializeUserIfAvaliable,
+  auth.requireUserIfAvaliable(['admin', 'hr']),
   validate(jobOpeningSchema.getJobOpeningByIdSchema),
   jobOpeningController.getJobOpeningById,
 );

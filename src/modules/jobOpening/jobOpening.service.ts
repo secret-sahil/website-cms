@@ -42,11 +42,11 @@ export const updateJobOpening = async (
 
 export const getUniqueJobOpening = async (
   where: Prisma.JobOpeningWhereUniqueInput,
-  select?: Prisma.JobOpeningSelect,
+  include?: Prisma.JobOpeningInclude,
 ) => {
   return (await prisma.jobOpening.findUnique({
     where,
-    select,
+    include,
   })) as JobOpening;
 };
 
