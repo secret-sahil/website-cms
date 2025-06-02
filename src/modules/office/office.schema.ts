@@ -37,7 +37,7 @@ export const deleteOfficeSchema = object({
   }),
 });
 
-export const getOfficeByIdSchema = object({
+export const getUniqueOffice = object({
   params: object({
     id: string({ required_error: 'Id is required.' }),
   }),
@@ -54,5 +54,5 @@ export const getOfficeSchema = object({
 export type createOfficeInput = TypeOf<typeof createOfficeSchema>['body'];
 export type updateOfficeInput = TypeOf<typeof updateOfficeSchema>;
 export type deleteOfficeInput = TypeOf<typeof deleteOfficeSchema>['params'];
-export type getOfficeByIdInput = TypeOf<typeof getOfficeByIdSchema>['params'];
+export type getUniqueOfficeInput = TypeOf<typeof getUniqueOffice>['params'];
 export type getOfficeInput = TypeOf<typeof getOfficeSchema>['query'];

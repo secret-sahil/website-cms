@@ -105,8 +105,8 @@ export const getOfficeHandler = async (
   }
 };
 
-export const getOfficeById = async (
-  req: Request<officeSchema.getOfficeByIdInput>,
+export const getUniqueOffice = async (
+  req: Request<officeSchema.getUniqueOfficeInput>,
   res: Response,
   next: NextFunction,
 ) => {
