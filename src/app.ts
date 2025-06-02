@@ -10,7 +10,8 @@ import authRouter from './routes/auth.routes';
 import userRouter from './routes/user.routes';
 import categoriesRouter from './routes/category.routes';
 import blogRouter from './routes/blog.routes';
-import offcieRouter from './routes/office.routes';
+import officeRouter from './routes/office.routes';
+import applicationRouter from './routes/application.routes';
 import leadRouter from './routes/lead.routes';
 import jobOpeningRouter from './routes/jobOpening.routes';
 import meidaRouter from './routes/media.routes';
@@ -59,7 +60,8 @@ async function bootstrap() {
   app.use('/api/v1/categories', categoriesRouter);
   app.use('/api/v1/careers', jobOpeningRouter);
   app.use('/api/v1/blog', blogRouter);
-  app.use('/api/v1/office', offcieRouter);
+  app.use('/api/v1/office', officeRouter);
+  app.use('/api/v1/application', applicationRouter);
   app.use('/api/v1/lead', leadRouter);
   app.use('/api/v1/media', meidaRouter);
   app.get('/test-template', (req, res) => {
