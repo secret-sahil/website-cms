@@ -86,6 +86,8 @@ model Application {
   wheredidyouhear           Wheredidyouhear
   hasSubscribedToNewsletter Boolean         @default(false)
 
+  isOpened Boolean @default(false)
+
   createdBy String   @default("system")
   updatedBy String   @default("system")
   createdAt DateTime @default(now())

@@ -61,7 +61,7 @@ async function bootstrap() {
   app.use('/api/v1/careers', jobOpeningRouter);
   app.use('/api/v1/blog', blogRouter);
   app.use('/api/v1/office', officeRouter);
-  app.use('/api/v1/application', applicationRouter);
+  app.use('/api/v1/applications', applicationRouter);
   app.use('/api/v1/lead', leadRouter);
   app.use('/api/v1/media', meidaRouter);
   app.get('/test-template', (req, res) => {

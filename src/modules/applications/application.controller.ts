@@ -33,7 +33,7 @@ export const updateApplicationHandler = async (
 ) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, isOpened } = req.body;
 
     await applicationServices.updateApplication(
       {
@@ -41,6 +41,7 @@ export const updateApplicationHandler = async (
       },
       {
         status,
+        isOpened,
         updatedBy: req.user!.username,
       },
     );
@@ -60,11 +61,14 @@ export const getApplicationHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const { search, page, limit } = req.query;
+    const { search, page, limit, jobOpeningId } = req.query;
     const application = await applicationServices.getAllApplication(
       search,
       page ? Number(page) : undefined,
       limit ? Number(limit) : undefined,
+      {
+        jobOpeningId,
+      },
     );
 
     res.status(200).json(response.successResponse('SUCCESS', 'Fetched successfully', application));

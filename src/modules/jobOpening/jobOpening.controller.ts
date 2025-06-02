@@ -152,6 +152,11 @@ export const getJobOpeningHandler = async (
             city: true,
           },
         },
+        _count: {
+          select: {
+            application: true,
+          },
+        },
       },
     );
 

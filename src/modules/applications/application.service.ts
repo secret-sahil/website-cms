@@ -4,11 +4,11 @@ const prisma = new PrismaClient();
 
 export const createApplication = async (
   input: Prisma.ApplicationUncheckedCreateInput,
-  select?: Prisma.ApplicationSelect,
+  include?: Prisma.ApplicationInclude,
 ) => {
   return (await prisma.application.create({
     data: input,
-    select,
+    include,
   })) as Application;
 };
 
@@ -21,22 +21,22 @@ export const deleteApplication = async (where: Prisma.ApplicationWhereUniqueInpu
 export const updateApplication = async (
   where: Prisma.ApplicationWhereUniqueInput,
   data: Prisma.ApplicationUncheckedUpdateInput,
-  select?: Prisma.ApplicationSelect,
+  include?: Prisma.ApplicationInclude,
 ) => {
   return (await prisma.application.update({
     data,
     where,
-    select,
+    include,
   })) as Application;
 };
 
 export const getUniqueApplication = async (
   where: Prisma.ApplicationWhereUniqueInput,
-  select?: Prisma.ApplicationSelect,
+  include?: Prisma.ApplicationInclude,
 ) => {
   return (await prisma.application.findUnique({
     where,
-    select,
+    include,
   })) as Application;
 };
 
@@ -45,7 +45,7 @@ export const getAllApplication = async (
   page: number = 1,
   pageSize?: number,
   where?: Prisma.ApplicationWhereInput,
-  select?: Prisma.ApplicationSelect,
+  include?: Prisma.ApplicationInclude,
 ) => {
   const skip = pageSize ? (page - 1) * pageSize : 0;
 
@@ -60,7 +60,7 @@ export const getAllApplication = async (
       },
       skip,
       take: pageSize,
-      select,
+      include,
       orderBy: {
         createdAt: 'desc',
       },

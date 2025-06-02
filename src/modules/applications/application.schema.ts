@@ -1,12 +1,12 @@
-import { ApplicationStatus } from '@prisma/client';
-import { nativeEnum, object, string, TypeOf } from 'zod';
+import { boolean, z, object, string, TypeOf } from 'zod';
 
 export const updateApplicationSchema = object({
   params: object({
     id: string({ required_error: 'Id is required.' }),
   }),
   body: object({
-    status: nativeEnum(ApplicationStatus),
+    status: z.enum(['in_review', 'hired', 'rejected']),
+    isOpened: boolean(),
   }).partial(),
 });
 
@@ -27,6 +27,7 @@ export const getApplicationSchema = object({
     search: string(),
     page: string(),
     limit: string(),
+    jobOpeningId: string().uuid(),
   }).partial(),
 });
 
