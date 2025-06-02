@@ -5,7 +5,7 @@ export const createLeadSchema = object({
   body: object({
     fullName: string({ required_error: 'Full name is required.' }),
     email: string({ required_error: 'Email is required.' }).email('Invalid email format.'),
-    phone: string({ required_error: 'Phone number is required.' }).max(15, {
+    phone: string({ required_error: 'Phone number is required.' }).max(16, {
       message: 'Invalid phone number.',
     }),
     jobTitle: nativeEnum(JobTitles).optional(),
