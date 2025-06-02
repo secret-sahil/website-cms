@@ -4,6 +4,7 @@ import { jobOpeningSchema, jobOpeningServices } from '.';
 import AppError from '../utils/appError';
 import { awsS3services } from '../upload';
 import crypto from 'crypto';
+import Email from '../email/email';
 
 export const createJobOpeningHandler = async (
   req: Request<{}, {}, jobOpeningSchema.createJobOpeningInput>,
@@ -49,7 +50,7 @@ export const applyJobOpeningHandler = async (
 
     req.file!.originalname = `${fullName.split(' ').join('-').toLowerCase()}-${crypto.randomUUID()}.pdf`;
     const resume = await awsS3services.uploadToS3(req.file!, 'resume-infutrix/');
-
+    const jobOpening = await jobOpeningServices.getUniqueJobOpening({ id: jobOpeningId });
     await jobOpeningServices.createJobApplication({
       fullName,
       jobOpeningId,
@@ -62,7 +63,10 @@ export const applyJobOpeningHandler = async (
       hasSubscribedToNewsletter: hasSubscribedToNewsletter === 'yes',
       createdBy: fullName,
     });
-
+    new Email({
+      email,
+      context: { fullName, job_title: jobOpening.title },
+    }).sendjobApplicationMail();
     res.status(200).json(response.successResponse('SUCCESS', 'Created Successfully'));
   } catch (err: any) {
     await awsS3services.deleteFromS3(`resume-infutrix/${req.file!.originalname}`);

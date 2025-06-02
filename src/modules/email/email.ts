@@ -74,4 +74,11 @@ export default class Email {
       subject: 'Thank You for Reaching Out to Infutrix!',
     });
   }
+
+  async sendjobApplicationMail() {
+    await this.send({
+      template: 'jobApplicationSubmit',
+      subject: 'Application Received – Thanks for Applying at Infutrix!',
+    });
+  }
 }
