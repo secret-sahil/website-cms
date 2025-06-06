@@ -218,10 +218,10 @@ export const getUniqueBlog = async (
             },
           },
         },
+        createdAt: true,
         ...(req.hasAccess
           ? {
               isPublished: true,
-              createdAt: true,
               updatedAt: true,
               createdBy: true,
               updatedBy: true,
