@@ -49,7 +49,7 @@ export const updateApplicationHandler = async (
     res.status(200).json(response.successResponse('SUCCESS', 'Updated Successfully'));
   } catch (err: any) {
     if (err.code === 'P2002') {
-      return next(new AppError(400, 'Dublicate entries are not allowed.'));
+      return next(new AppError(400, 'Duplicate entries are not allowed.'));
     }
     next(err);
   }

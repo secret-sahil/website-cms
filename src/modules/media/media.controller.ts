@@ -96,7 +96,7 @@ export const updateMediaHandler = async (
   } catch (err: any) {
     await awsS3services.deleteFromS3(`media-infutrix/${newFilename}`);
     if (err.code === 'P2002') {
-      return next(new AppError(400, 'Dublicate entries are not allowed.'));
+      return next(new AppError(400, 'Duplicate entries are not allowed.'));
     }
     next(err);
   }
