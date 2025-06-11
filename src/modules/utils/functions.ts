@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import config from 'config';
 
 export function Slugify(input: string): string {
-  const randomSuffix = Math.random().toString(36).substring(2, 7);
+  // const randomSuffix = Math.random().toString(36).substring(2, 7);
   const slug = input
     .toLowerCase()
     .trim()
@@ -11,7 +11,7 @@ export function Slugify(input: string): string {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-');
 
-  return `${slug}-${randomSuffix}`;
+  return `${slug}`;
 }
 
 export function getMediaType(mimetype: string): MediaType {
