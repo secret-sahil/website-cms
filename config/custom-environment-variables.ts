@@ -6,6 +6,8 @@ export default {
   refreshTokenPrivateKey: 'JWT_REFRESH_TOKEN_PRIVATE_KEY',
   refreshTokenPublicKey: 'JWT_REFRESH_TOKEN_PUBLIC_KEY',
 
+  redisUrl: 'REDIS_URL',
+
   smtp: {
     service: 'EMAIL_HOST',
     user: 'EMAIL_USER',
