@@ -3,7 +3,7 @@ import { cleanEnv, port, str } from 'envalid';
 function validateEnv() {
   cleanEnv(process.env, {
     DATABASE_URL: str(),
-    REDIS_URL: str(),
+    REDIS_DATABASE_URL: str(),
 
     PORT: port(),
     NODE_ENV: str(),
