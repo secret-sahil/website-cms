@@ -7,16 +7,21 @@ function validateEnv() {
     PORT: port(),
     NODE_ENV: str(),
 
-    POSTGRES_HOST: str(),
-    POSTGRES_PORT: port(),
-    POSTGRES_USER: str(),
-    POSTGRES_PASSWORD: str(),
-    POSTGRES_DB: str(),
-
     JWT_ACCESS_TOKEN_PRIVATE_KEY: str(),
     JWT_ACCESS_TOKEN_PUBLIC_KEY: str(),
     JWT_REFRESH_TOKEN_PRIVATE_KEY: str(),
     JWT_REFRESH_TOKEN_PUBLIC_KEY: str(),
+
+    EMAIL_HOST: str(),
+    EMAIL_USER: str(),
+    EMAIL_PASS: str(),
+
+    AWS_REGION: str(),
+    AWS_ACCESS_KEY_ID: str(),
+    AWS_S3_BUCKET_NAME: str(),
+    AWS_SECRET_ACCESS_KEY: str(),
+
+    DATA_ENCRYPTION_KEY: str(),
   });
 }
 
