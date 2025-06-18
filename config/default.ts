@@ -1,5 +1,5 @@
 export default {
-  appName: 'Infutrix Technologies',
+  appName: 'Bytelog Solutions',
   verificationTokenExpiresIn: 10, //minutes
   redisCacheExpiresIn: 30, //days
   refreshTokenExpiresIn: 30, //days
