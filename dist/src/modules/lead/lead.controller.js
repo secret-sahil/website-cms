@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -9,10 +18,10 @@ const _1 = require(".");
 const appError_1 = __importDefault(require("../utils/appError"));
 const email_1 = __importDefault(require("../email/email"));
 const functions_1 = require("../utils/functions");
-const createLeadHandler = async (req, res, next) => {
+const createLeadHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { fullName, email, phone, jobTitle, companySize, company, message, budget, source } = req.body;
-        await _1.leadServices.createLead({
+        yield _1.leadServices.createLead({
             fullName,
             email: (0, functions_1.encryptData)(email),
             phone: (0, functions_1.encryptData)(phone),
@@ -32,13 +41,13 @@ const createLeadHandler = async (req, res, next) => {
         }
         next(err);
     }
-};
+});
 exports.createLeadHandler = createLeadHandler;
-const updateLeadHandler = async (req, res, next) => {
+const updateLeadHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const { isOpened } = req.body;
-        await _1.leadServices.updateLead({
+        yield _1.leadServices.updateLead({
             id,
         }, {
             isOpened: isOpened ? isOpened : undefined,
@@ -52,23 +61,23 @@ const updateLeadHandler = async (req, res, next) => {
         }
         next(err);
     }
-};
+});
 exports.updateLeadHandler = updateLeadHandler;
-const getLeadHandler = async (req, res, next) => {
+const getLeadHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { search, page, limit } = req.query;
-        const lead = await _1.leadServices.getAllLead(search, page ? Number(page) : undefined, limit ? Number(limit) : undefined);
+        const lead = yield _1.leadServices.getAllLead(search, page ? Number(page) : undefined, limit ? Number(limit) : undefined);
         res.status(200).json(utils_1.response.successResponse('SUCCESS', 'Fetched successfully', lead));
     }
     catch (err) {
         next(err);
     }
-};
+});
 exports.getLeadHandler = getLeadHandler;
-const getUniqueLead = async (req, res, next) => {
+const getUniqueLead = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const leads = await _1.leadServices.getUniqueLead({
+        const leads = yield _1.leadServices.getUniqueLead({
             id: id,
         });
         res.status(200).json(utils_1.response.successResponse('SUCCESS', 'Fetched successfully', leads));
@@ -76,6 +85,6 @@ const getUniqueLead = async (req, res, next) => {
     catch (err) {
         next(err);
     }
-};
+});
 exports.getUniqueLead = getUniqueLead;
 //# sourceMappingURL=lead.controller.js.map

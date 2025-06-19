@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -7,10 +16,10 @@ exports.getUniqueOffice = exports.getOfficeHandler = exports.updateOfficeHandler
 const utils_1 = require("../utils");
 const _1 = require(".");
 const appError_1 = __importDefault(require("../utils/appError"));
-const createOfficeHandler = async (req, res, next) => {
+const createOfficeHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, address, city, state, country, postalCode } = req.body;
-        await _1.officeServices.createOffice({
+        yield _1.officeServices.createOffice({
             name,
             address,
             city,
@@ -27,12 +36,12 @@ const createOfficeHandler = async (req, res, next) => {
         }
         next(err);
     }
-};
+});
 exports.createOfficeHandler = createOfficeHandler;
-const deleteOfficeHandler = async (req, res, next) => {
+const deleteOfficeHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        await _1.officeServices.deleteOffice({ id });
+        yield _1.officeServices.deleteOffice({ id });
         res.status(200).json(utils_1.response.successResponse('SUCCESS', 'Office Deleted Successfully'));
     }
     catch (err) {
@@ -41,13 +50,13 @@ const deleteOfficeHandler = async (req, res, next) => {
         }
         next(err);
     }
-};
+});
 exports.deleteOfficeHandler = deleteOfficeHandler;
-const updateOfficeHandler = async (req, res, next) => {
+const updateOfficeHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const { name, address, city, state, country, postalCode } = req.body;
-        await _1.officeServices.updateOffice({
+        yield _1.officeServices.updateOffice({
             id,
         }, {
             name,
@@ -66,23 +75,23 @@ const updateOfficeHandler = async (req, res, next) => {
         }
         next(err);
     }
-};
+});
 exports.updateOfficeHandler = updateOfficeHandler;
-const getOfficeHandler = async (req, res, next) => {
+const getOfficeHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { search, page, limit } = req.query;
-        const office = await _1.officeServices.getAllOffice(search, page ? Number(page) : undefined, limit ? Number(limit) : undefined);
+        const office = yield _1.officeServices.getAllOffice(search, page ? Number(page) : undefined, limit ? Number(limit) : undefined);
         res.status(200).json(utils_1.response.successResponse('SUCCESS', 'Fetched successfully', office));
     }
     catch (err) {
         next(err);
     }
-};
+});
 exports.getOfficeHandler = getOfficeHandler;
-const getUniqueOffice = async (req, res, next) => {
+const getUniqueOffice = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const offices = await _1.officeServices.getUniqueOffice({
+        const offices = yield _1.officeServices.getUniqueOffice({
             id,
         });
         res.status(200).json(utils_1.response.successResponse('SUCCESS', 'Fetched successfully', offices));
@@ -90,6 +99,6 @@ const getUniqueOffice = async (req, res, next) => {
     catch (err) {
         next(err);
     }
-};
+});
 exports.getUniqueOffice = getUniqueOffice;
 //# sourceMappingURL=office.controller.js.map

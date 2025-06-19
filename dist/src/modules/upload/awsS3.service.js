@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -19,9 +28,9 @@ const s3 = new client_s3_1.S3Client({
  * @param location location to upload the files to format: 'folder/'
  * @returns
  */
-const uploadToS3 = async (
+const uploadToS3 = (
 // eslint-disable-next-line no-undef
-files, location) => {
+files, location) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!files) {
             return [];
@@ -37,7 +46,7 @@ files, location) => {
                 ContentType: file.mimetype,
             };
             const command = new client_s3_1.PutObjectCommand(params);
-            await s3.send(command);
+            yield s3.send(command);
             uploadResults.push(`${config_1.default.get('cloudfrontBaseUrl')}/${params.Key}`);
         }
         return uploadResults; // Return an array of uploaded file details
@@ -46,16 +55,16 @@ files, location) => {
         console.error('Error uploading to S3:', error);
         throw error;
     }
-};
+});
 exports.uploadToS3 = uploadToS3;
-const deleteFromS3 = async (key) => {
+const deleteFromS3 = (key) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const params = {
             Bucket: config_1.default.get('awsBucketName'),
             Key: key,
         };
         const command = new client_s3_1.DeleteObjectCommand(params);
-        await s3.send(command);
+        yield s3.send(command);
         console.log(`File deleted: ${key}`);
         return true;
     }
@@ -63,6 +72,6 @@ const deleteFromS3 = async (key) => {
         console.error('Error deleting from S3:', error);
         return false;
     }
-};
+});
 exports.deleteFromS3 = deleteFromS3;
 //# sourceMappingURL=awsS3.service.js.map

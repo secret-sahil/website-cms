@@ -8,10 +8,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("config"));
 const signJwt = (payload, keyName, options) => {
     const privateKey = Buffer.from(config_1.default.get(keyName), 'base64').toString('ascii');
-    return jsonwebtoken_1.default.sign(payload, privateKey, {
-        ...(options && options),
-        algorithm: 'RS256',
-    });
+    return jsonwebtoken_1.default.sign(payload, privateKey, Object.assign(Object.assign({}, (options && options)), { algorithm: 'RS256' }));
 };
 exports.signJwt = signJwt;
 const verifyJwt = (token, keyName) => {

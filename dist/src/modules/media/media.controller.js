@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -9,7 +18,7 @@ const _1 = require(".");
 const appError_1 = __importDefault(require("../utils/appError"));
 const upload_1 = require("../upload");
 const functions_1 = require("../utils/functions");
-const createMediaHandler = async (req, res, next) => {
+const createMediaHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.file) {
         return next(new appError_1.default(400, 'Media file is required.'));
     }
@@ -19,8 +28,8 @@ const createMediaHandler = async (req, res, next) => {
         : req.file.originalname + `-${randomSuffix}`;
     req.file.originalname = newFilename;
     try {
-        const image = await upload_1.awsS3services.uploadToS3(req.file, 'media-infutrix/');
-        await _1.mediaServices.createMedia({
+        const image = yield upload_1.awsS3services.uploadToS3(req.file, 'media-infutrix/');
+        yield _1.mediaServices.createMedia({
             url: image[0],
             name: newFilename,
             type: (0, functions_1.getMediaType)(req.file.mimetype),
@@ -32,17 +41,17 @@ const createMediaHandler = async (req, res, next) => {
         }));
     }
     catch (err) {
-        await upload_1.awsS3services.deleteFromS3(`media-infutrix/${newFilename}`);
+        yield upload_1.awsS3services.deleteFromS3(`media-infutrix/${newFilename}`);
         next(err);
     }
-};
+});
 exports.createMediaHandler = createMediaHandler;
-const deleteMediaHandler = async (req, res, next) => {
+const deleteMediaHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const media = await _1.mediaServices.getUniqueMedia({ id });
-        await _1.mediaServices.deleteMedia({ id });
-        await upload_1.awsS3services.deleteFromS3(`media-infutrix/${media.name}`);
+        const media = yield _1.mediaServices.getUniqueMedia({ id });
+        yield _1.mediaServices.deleteMedia({ id });
+        yield upload_1.awsS3services.deleteFromS3(`media-infutrix/${media.name}`);
         res.status(200).json(utils_1.response.successResponse('SUCCESS', 'Media Deleted Successfully'));
     }
     catch (err) {
@@ -51,9 +60,9 @@ const deleteMediaHandler = async (req, res, next) => {
         }
         next(err);
     }
-};
+});
 exports.deleteMediaHandler = deleteMediaHandler;
-const updateMediaHandler = async (req, res, next) => {
+const updateMediaHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.file) {
         return next(new appError_1.default(400, 'Media file is required.'));
     }
@@ -64,8 +73,8 @@ const updateMediaHandler = async (req, res, next) => {
     req.file.originalname = newFilename;
     try {
         const { id } = req.params;
-        const image = await upload_1.awsS3services.uploadToS3(req.file, 'media-infutrix/');
-        await _1.mediaServices.updateMedia({
+        const image = yield upload_1.awsS3services.uploadToS3(req.file, 'media-infutrix/');
+        yield _1.mediaServices.updateMedia({
             id,
         }, {
             url: image[0],
@@ -79,21 +88,19 @@ const updateMediaHandler = async (req, res, next) => {
         }));
     }
     catch (err) {
-        await upload_1.awsS3services.deleteFromS3(`media-infutrix/${newFilename}`);
+        yield upload_1.awsS3services.deleteFromS3(`media-infutrix/${newFilename}`);
         if (err.code === 'P2002') {
             return next(new appError_1.default(400, 'Duplicate entries are not allowed.'));
         }
         next(err);
     }
-};
+});
 exports.updateMediaHandler = updateMediaHandler;
-const getMediaHandler = async (req, res, next) => {
+const getMediaHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { page, limit, type: rawType } = req.query;
         const type = rawType ? JSON.parse(rawType) : undefined;
-        const media = await _1.mediaServices.getAllMedia(page ? Number(page) : undefined, limit ? Number(limit) : undefined, {
-            ...(type ? { type: { in: type } } : {}),
-        }, {
+        const media = yield _1.mediaServices.getAllMedia(page ? Number(page) : undefined, limit ? Number(limit) : undefined, Object.assign({}, (type ? { type: { in: type } } : {})), {
             blogs: {
                 select: {
                     id: true,
@@ -106,6 +113,6 @@ const getMediaHandler = async (req, res, next) => {
     catch (err) {
         next(err);
     }
-};
+});
 exports.getMediaHandler = getMediaHandler;
 //# sourceMappingURL=media.controller.js.map

@@ -5,10 +5,6 @@ const response_1 = require("./response");
 const client_1 = require("@prisma/client");
 const prisma_better_errors_1 = require("prisma-better-errors");
 class AppError extends Error {
-    statusCode;
-    message;
-    status;
-    isOperational;
     constructor(statusCode = 500, message) {
         super(message);
         this.statusCode = statusCode;
