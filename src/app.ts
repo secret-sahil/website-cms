@@ -73,7 +73,7 @@ async function bootstrap() {
   // GLOBAL ERROR HANDLER
   app.use(errorHandler);
 
-  const port = process.env.PORT || config.get<number>('port');
+  const port = config.get<number>('port');
   app.listen(port, () => {
     console.log(`Server on port: ${port}`);
   });
