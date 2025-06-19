@@ -8,7 +8,8 @@
     "start": "node dist/src/app.js",
     "db:migrate": "npx prisma generate && npx prisma migrate dev --name user-entity --create-only",
     "db:push": "npx prisma db push",
-    "build": "tsc && copyfiles -u 1 src/views/**/*.hbs dist/src",
+    "build": "rimraf dist && tsc && copyfiles -u 1 src/views/**/*.hbs dist/src",
+    "add-build": "git add dist",
     "lint": "eslint",
     "format": "eslint --fix",
     "test": "npx lint",
@@ -68,6 +69,7 @@
     "prettier": "^3.4.2",
     "prisma-better-errors": "^1.0.4",
     "redis": "^4.6.13",
+    "rimraf": "^6.0.1",
     "ts-node-dev": "^2.0.0",
     "zod": "^3.22.4"
   },
