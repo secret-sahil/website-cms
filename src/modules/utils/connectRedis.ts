@@ -1,8 +1,8 @@
-import config from 'config';
+// import config from 'config';
 import { createClient } from 'redis';
-console.log(config.get<string>('redisUrl'));
+console.log(process.env.REDIS_URL);
 const redisClient = createClient({
-  url: process.env.REDIS_URL || config.get<string>('redisUrl'),
+  url: process.env.REDIS_URL,
 });
 
 const connectRedis = async () => {

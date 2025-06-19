@@ -3,6 +3,5 @@ node_modules
 .env
 dump.rdb
 --debug
-dist
 public
 .vercel
