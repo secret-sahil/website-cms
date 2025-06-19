@@ -14,7 +14,8 @@
     "format": "eslint --fix",
     "test": "npx lint",
     "prepare": "husky",
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts",
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
