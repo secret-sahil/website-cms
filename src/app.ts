@@ -29,7 +29,7 @@ validateEnv();
 const prisma = new PrismaClient();
 const app = express();
 
-async function bootstrap() {
+async function main() {
   // TEMPLATE ENGINE
   app.set('view engine', 'hbs');
   app.set('views', `${__dirname}/views`);
@@ -79,7 +79,7 @@ async function bootstrap() {
   });
 }
 
-bootstrap()
+main()
   .catch((err) => {
     throw err;
   })
