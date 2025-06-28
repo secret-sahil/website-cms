@@ -5,6 +5,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
+import favicon from 'serve-favicon';
+import path from 'path';
 import validateEnv from './modules/utils/validateEnv';
 import { PrismaClient } from '@prisma/client';
 import authRouter from './routes/auth.routes';
@@ -33,7 +35,7 @@ async function main() {
   // TEMPLATE ENGINE
   app.set('view engine', 'hbs');
   app.set('views', `${__dirname}/views`);
-
+  app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
   // MIDDLEWARE
 
   // 1.Body Parser
@@ -56,7 +58,7 @@ async function main() {
   // 5. Logger
   if (config.get<string>('env') === 'development') app.use(morgan('dev'));
 
-  // 6. ROUTES
+  // ROUTES
   app.get('/', defaultController.defaultController);
   app.use('/api/v1/auth', authRouter);
   app.use('/api/v1/users', userRouter);
