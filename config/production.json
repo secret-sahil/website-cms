@@ -1,0 +1,13 @@
+{
+  "appName": "Bytelog Solutions",
+  "verificationTokenExpiresIn": 10,
+  "redisCacheExpiresIn": 30,
+  "refreshTokenExpiresIn": 30,
+  "accessTokenExpiresIn": 1,
+  "origin": [
+    "https://bytelogsolutions.com",
+    "https://www.bytelogsolutions.com",
+    "https://admin.bytelogsolutions.com"
+  ],
+  "cloudfrontBaseUrl": "https://d26yyyedhrucxb.cloudfront.net"
+}

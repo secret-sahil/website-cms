@@ -1,0 +1,9 @@
+{
+  "appName": "Bytelog Solutions (Development)",
+  "verificationTokenExpiresIn": 10,
+  "redisCacheExpiresIn": 30,
+  "refreshTokenExpiresIn": 30,
+  "accessTokenExpiresIn": 1,
+  "origin": ["http://localhost:3000"],
+  "cloudfrontBaseUrl": "https://d26yyyedhrucxb.cloudfront.net"
+}
