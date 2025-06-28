@@ -14,7 +14,7 @@ const cookiesOptions: CookieOptions = {
   sameSite: 'lax',
 };
 
-if (process.env.NODE_ENV === 'production') cookiesOptions.secure = true;
+if (config.get<string>('env') === 'production') cookiesOptions.secure = true;
 
 const accessTokenCookieOptions: CookieOptions = {
   ...cookiesOptions,

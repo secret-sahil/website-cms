@@ -51,7 +51,7 @@ async function bootstrap() {
   );
 
   // 3. Logger
-  if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
+  if (config.get<string>('env') === 'development') app.use(morgan('dev'));
 
   // ROUTES
   app.get('/', defaultController.defaultController);
