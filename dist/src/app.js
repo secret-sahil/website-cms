@@ -34,11 +34,6 @@ const jobOpening_routes_1 = __importDefault(require("./routes/jobOpening.routes"
 const media_routes_1 = __importDefault(require("./routes/media.routes"));
 const appError_1 = require("./modules/utils/appError");
 const default_1 = require("./modules/default");
-// import nodemailer from 'nodemailer';
-// (async function () {
-//   const credentials = await nodemailer.createTestAccount();
-//   console.log(credentials);
-// })();
 (0, validateEnv_1.default)();
 const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();

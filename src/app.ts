@@ -21,16 +21,11 @@ import meidaRouter from './routes/media.routes';
 import { errorHandler, notFoundRoute } from './modules/utils/appError';
 import { defaultController } from './modules/default';
 
-// import nodemailer from 'nodemailer';
-// (async function () {
-//   const credentials = await nodemailer.createTestAccount();
-//   console.log(credentials);
-// })();
-
 validateEnv();
 
 const prisma = new PrismaClient();
 const app = express();
+
 async function main() {
   // TEMPLATE ENGINE
   app.set('view engine', 'hbs');
