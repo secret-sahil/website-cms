@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import config from 'config';
 import cors from 'cors';
+import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import validateEnv from './modules/utils/validateEnv';
@@ -28,7 +29,6 @@ validateEnv();
 
 const prisma = new PrismaClient();
 const app = express();
-
 async function main() {
   // TEMPLATE ENGINE
   app.set('view engine', 'hbs');
@@ -39,10 +39,13 @@ async function main() {
   // 1.Body Parser
   app.use(express.json({ limit: '10mb' }));
 
-  // 2. Cookie Parser
+  // 2. Security
+  app.use(helmet());
+
+  // 3. Cookie Parser
   app.use(cookieParser());
 
-  // 2. Cors
+  // 4. Cors
   app.use(
     cors({
       origin: config.get<string>('origin'),
@@ -50,10 +53,10 @@ async function main() {
     }),
   );
 
-  // 3. Logger
+  // 5. Logger
   if (config.get<string>('env') === 'development') app.use(morgan('dev'));
 
-  // ROUTES
+  // 6. ROUTES
   app.get('/', defaultController.defaultController);
   app.use('/api/v1/auth', authRouter);
   app.use('/api/v1/users', userRouter);
@@ -67,6 +70,7 @@ async function main() {
   app.get('/test-template', (req, res) => {
     res.render('leadFormResponse');
   });
+
   // 404 ~ not found error handler
   app.use(notFoundRoute);
 
