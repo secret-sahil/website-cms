@@ -5,3 +5,4 @@ dump.rdb
 --debug
 public
 .vercel
+dist
