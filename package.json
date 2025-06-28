@@ -8,7 +8,7 @@
     "start": "set NODE_ENV=production&& node dist/src/app.js",
     "db:migrate": "npx prisma generate && npx prisma migrate dev --name user-entity --create-only",
     "db:push": "npx prisma db push",
-    "build": "rimraf dist && tsc && copyfiles -u 1 src/views/**/*.hbs dist/src && copyfiles -u 1 public/favicon.ico dist",
+    "build": "rimraf dist && tsc && copyfiles -u 1 src/views/**/*.hbs dist/src && copyfiles -u 1 public/favicon.ico dist/favicon",
     "add-build": "git add dist",
     "lint": "eslint",
     "format": "eslint --fix",
