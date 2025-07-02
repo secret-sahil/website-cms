@@ -9,5 +9,5 @@
     "https://www.bytelogsolutions.com",
     "https://cms.bytelogsolutions.com"
   ],
-  "cloudfrontBaseUrl": "https://cms.bytelogsolutions.com"
+  "cloudfrontBaseUrl": "https://cdn.bytelogsolutions.com"
 }
