@@ -39,7 +39,7 @@ export const uploadToS3 = async (
         Bucket: config.get<string>('awsBucketName'),
         Key: `${location}${file.originalname}`,
         Body: file.buffer,
-        ACL: 'public-read',
+        // ACL: 'public-read',
         ContentType: file.mimetype,
       };
 

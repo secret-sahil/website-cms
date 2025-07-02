@@ -42,7 +42,7 @@ files, location) => __awaiter(void 0, void 0, void 0, function* () {
                 Bucket: config_1.default.get('awsBucketName'),
                 Key: `${location}${file.originalname}`,
                 Body: file.buffer,
-                ACL: 'public-read',
+                // ACL: 'public-read',
                 ContentType: file.mimetype,
             };
             const command = new client_s3_1.PutObjectCommand(params);
