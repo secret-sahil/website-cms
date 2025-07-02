@@ -5,5 +5,5 @@
   "refreshTokenExpiresIn": 30,
   "accessTokenExpiresIn": 1,
   "origin": ["http://localhost:3000"],
-  "cloudfrontBaseUrl": "https://d26yyyedhrucxb.cloudfront.net"
+  "cloudfrontBaseUrl": "https://cms.bytelogsolutions.com"
 }
