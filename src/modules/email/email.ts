@@ -7,7 +7,7 @@ import juice from 'juice';
 import Mail from 'nodemailer/lib/mailer';
 
 const smtp = config.get<{
-  service: string;
+  host: string;
   user: string;
   pass: string;
 }>('smtp');

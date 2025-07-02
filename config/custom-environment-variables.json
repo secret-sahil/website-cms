@@ -9,7 +9,7 @@
   "redisUrl": "REDIS_URL",
 
   "smtp": {
-    "service": "EMAIL_HOST",
+    "host": "EMAIL_HOST",
     "user": "EMAIL_USER",
     "pass": "EMAIL_PASS"
   },
